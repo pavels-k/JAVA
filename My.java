@@ -19,5 +19,7 @@ public class My {
         // Заменим значение элемента
         expenses[index] = newExpense;
         System.out.println("За день с индексом " + index + " размер трат теперь " + expenses[index]);
+
+        System.out.println("ADDWadw".toLowerCase());
     }
 }

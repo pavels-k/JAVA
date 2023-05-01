@@ -10,11 +10,12 @@ public class ChangeInt {
         String name2 = name.toLowerCase();
         System.out.println(name2);
 
-        Scanner console = new Scanner(System.in);
-        String line = console.nextLine();
-        int age = console.nextInt();
-        System.out.println("Name: " + line);
-        System.out.println("Age: " + age);
+        try (Scanner console = new Scanner(System.in)) {
+            String line = console.nextLine();
+            int age = console.nextInt();
+            System.out.println("Name: " + line);
+            System.out.println("Age: " + age);
+        }
 
     }
 }

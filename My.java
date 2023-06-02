@@ -1,26 +1,9 @@
-import java.util.Scanner;
+import java.util.Arrays;
 
 public class My {
     public static void main(String[] args){
-        double[] expenses = {100.50, 500.00, 10.00, 0.0, 40.60, 500.10, 200.00};
-        
-
-        try (Scanner scanner = new Scanner(System.in)) {
-            String input = System.console().readLine();
-            System.out.println("Переменная input:" + input);
-
-            System.out.println("Расходы бла бла бла");
-
-            // Объявляем перемнную
-            int index = scanner.nextInt();
-
-            // Объявим переменную
-            double newExpense = scanner.nextDouble();
-
-            // Заменим значение элемента
-            expenses[index] = newExpense;
-            System.out.println("За день с индексом " + index + " размер трат теперь " + expenses[index]);
-        }
-        System.out.println("ADDWadw".toLowerCase());
+        int[] array = {1, 2, 3};
+        System.out.println(array);
+        System.out.println(Arrays.toString(array));
     }
 }

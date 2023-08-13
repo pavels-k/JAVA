@@ -17,5 +17,9 @@ public class Main {
         System.out.println(s1.equals(s2));
         System.out.println(s2.equals(s3));
         System.out.println(s1.equalsIgnoreCase(s2));
+        printer("dwa");
+    }
+    public static void  printer(String s){
+        System.out.println(s);
     }
 }

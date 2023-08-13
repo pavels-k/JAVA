@@ -17,9 +17,13 @@ public class Main {
         System.out.println(s1.equals(s2));
         System.out.println(s2.equals(s3));
         System.out.println(s1.equalsIgnoreCase(s2));
-        printer("dwa");
+        printer("dwa", 4);
     }
-    public static void  printer(String s){
-        System.out.println(s);
+    public static void  printer(String s, int n){
+        StringBuilder result = new StringBuilder(s);
+        for(int i = 0; i < n; i++){
+            result.append(" ").append(s);
+        }
+        System.out.println(result);
     }
 }

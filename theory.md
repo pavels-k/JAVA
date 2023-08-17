@@ -43,7 +43,20 @@ int min = a < b ? a : b;
 6 / 4.0 // 1.5
 ```
 
+**final** для объявления констант.
 
+_Shit+F6_ - переименовать переменные везде
 
+Если перемнная static, то к ней нужно обращаться через имя класса: ClassName.variable
 
+Иначе можно использовать ключевое слово **this**
 
+Порядок самых строгих до самых «мягких» _модификаторов доступа_:
+
+**private** (within class)
+
+**default** (_package visible_) (within package)
+
+**protected** (outside package by subclass only)
+
+**public** (outside package)

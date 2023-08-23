@@ -1,6 +1,4 @@
-import javax.print.DocFlavor;
-import java.util.Scanner;
-
+//package com.javarush.test;
 
 public class Main {
     public static void main(String[] args) {
@@ -10,18 +8,21 @@ public class Main {
         int min = a < b ? a : b;
         System.out.println(min);
 
-        String s1 = "Привет";
+        String sFirst = "Привет";
         String s2 = "ПРИВЕТ";
-        String s3 = s1.toUpperCase();
+        String s3 = sFirst.toUpperCase();
 
-        System.out.println(s1.equals(s2));
+        if (true) {
+            System.out.println(sFirst.equals(s2));
+        }
         System.out.println(s2.equals(s3));
-        System.out.println(s1.equalsIgnoreCase(s2));
+        System.out.println(sFirst.equalsIgnoreCase(s2));
         printer("dwa", 4);
     }
-    public static void  printer(String s, int n){
+
+    public static void printer(String s, int n) {
         StringBuilder result = new StringBuilder(s);
-        for(int i = 0; i < n; i++){
+        for (int i = 0; i < n; i++) {
             result.append(" ").append(s);
         }
         System.out.println(result);

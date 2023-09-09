@@ -1,20 +1,29 @@
 import java.util.Scanner;
+import java.util.Arrays;
 
 
 public class Main {
     public static void main(String[] args) {
 
-        System.out.println("Hello and welcome!");
+        System.out.println(lengthOfLongestSubstring("~^!@^#$^%%^$^#^&|^|"));
 
-        Scanner scanner = new Scanner(System.in);
+    }
 
-        System.out.println("Введите число:");
-        int age = scanner.nextInt();
+    public static int lengthOfLongestSubstring(String s) {
+        int n = s.length();
+        int maxLength = 0;
+        int[] charIndex = new int[128];
+        Arrays.fill(charIndex, -1);
+        int left = 0;
 
-        System.out.println("Ваш возраст: " + age);
-        if (age >= 18 && age <= 65)
-            System.out.println("Пора на работу");
-        else
-            System.out.println("Не пора на работу");
+        for (int right = 0; right < n; right++) {
+            if (charIndex[s.charAt(right)] >= left) {
+                left = charIndex[s.charAt(right)] + 1;
+            }
+            charIndex[s.charAt(right)] = right;
+            maxLength = Math.max(maxLength, right - left + 1);
+        }
+
+        return maxLength;
     }
 }

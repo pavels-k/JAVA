@@ -1,6 +1,8 @@
 import java.util.Scanner;
 import java.util.Arrays;
-
+import java.time.LocalDate;
+import org.apache.commons.lang3.StringUtils;
+import java.math.BigDecimal;
 
 public class Main {
     public static void main(String[] args) {
@@ -20,6 +22,7 @@ public class Main {
             if (charIndex[s.charAt(right)] >= left) {
                 left = charIndex[s.charAt(right)] + 1;
             }
+
             charIndex[s.charAt(right)] = right;
             maxLength = Math.max(maxLength, right - left + 1);
         }

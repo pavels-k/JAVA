@@ -1,8 +1,20 @@
+
+
+
 public class App {
     public static void main(String[] args) {
-        // BEGIN (write your solution here)
-         double number = 2.9;
-         System.out.println((int) number + " " + "times");
-        // END
+        System.out.println(Integer.toBinaryString(25));
+    }
+
+    // END
+}
+
+
+public static class Pair{
+    int x, y;
+    public void swap(){
+        int xor = x ^ y;
+        x = xor & y;
+        y = xor & x;
     }
 }

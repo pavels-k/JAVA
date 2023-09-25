@@ -2,7 +2,13 @@ package com.example.superbank;
 
 import org.springframework.stereotype.Service;
 
-@Service
+import java.math.BigDecimal;
 
+@Service
 public class BankService {
+
+
+    public BigDecimal getBalance(Long accountId){
+        return null;
+    }
 }

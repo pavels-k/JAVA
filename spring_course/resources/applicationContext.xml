@@ -9,7 +9,7 @@
 
 
     <bean id = "myPet"
-          class="spring_introduction.spring_introduction.Test1.Dog">
+          class="spring_introduction.Cat">
 
     </bean>
 

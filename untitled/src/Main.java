@@ -1,11 +1,14 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Collections;
+import java.util.Set;
 
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println(canJump(new int[] { 8, 2, 4, 4, 4, 9, 5, 2, 5, 8, 8, 0, 8, 6, 9, 1, 1, 6, 3, 5, 1, 2, 6, 6,
-                0, 4, 8, 6, 0, 3, 2, 8, 7, 6, 5, 1, 7, 0, 3, 4, 8, 3, 5, 9, 0, 4, 0, 1, 0, 5, 9, 2, 0, 7, 0, 2, 1, 0, 8,
-                2, 5, 1, 2, 3, 9, 7, 4, 7, 0, 0, 1, 8, 5, 6, 7, 5, 1, 9, 9, 3, 5, 0, 7, 5 }));
+        System.out.println(Jump(new int[]{2, 3, 1, 0, 0, 1, 4}));
     }
 
     public static int jumpFrom(int[] nums, int index, int minimumJump, int countJump, Set<Integer> indexJumped) {
@@ -38,6 +41,9 @@ public class Main {
         index_queue.add(0);
         int purpose = nums.length - 1;
         int index;
+
+        HashMap<Integer, Integer> dict = new HashMap<>();
+
         ArrayList<Integer> toSort = new ArrayList<>();
         while (!index_queue.isEmpty()) {
             index = index_queue.pop(); // извлечение
@@ -59,5 +65,23 @@ public class Main {
             }
         }
         return false;
+    }
+
+    public static int Jump(int[] nums) {
+        int reachable = 0;
+        HashMap<Integer, Integer> dict = new HashMap<Integer, Integer>();
+        dict.put(0, 0);
+        for (int i = 0; i < nums.length; i++) {
+            if (i > reachable) return 0;
+            reachable = Math.max(reachable, i + nums[i]);
+            for (int j = 1; j <= nums[i]; j++) {
+                if (dict.containsKey(i + j)) {
+                    dict.put(i + j, Math.min(dict.get(i) + 1, dict.get(i + j)));
+                } else {
+                    dict.put(i + j, dict.get(i) + 1);
+                }
+            }
+        }
+        return dict.get(nums.length - 1);
     }
 }

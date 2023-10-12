@@ -8,7 +8,7 @@ import java.util.Set;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println(Jump(new int[]{2, 3, 1, 0, 0, 1, 4}));
+        System.out.println(jump(new int[]{2, 3, 1, 0, 0, 1, 4}));
     }
 
     public static int jumpFrom(int[] nums, int index, int minimumJump, int countJump, Set<Integer> indexJumped) {
@@ -67,21 +67,22 @@ public class Main {
         return false;
     }
 
-    public static int Jump(int[] nums) {
-        int reachable = 0;
-        HashMap<Integer, Integer> dict = new HashMap<Integer, Integer>();
-        dict.put(0, 0);
-        for (int i = 0; i < nums.length; i++) {
-            if (i > reachable) return 0;
-            reachable = Math.max(reachable, i + nums[i]);
-            for (int j = 1; j <= nums[i]; j++) {
-                if (dict.containsKey(i + j)) {
-                    dict.put(i + j, Math.min(dict.get(i) + 1, dict.get(i + j)));
-                } else {
-                    dict.put(i + j, dict.get(i) + 1);
-                }
+    public static int jump(int[] nums) {
+        int ans = 0;
+        int end = 0;
+        int farthest = 0;
+        // Implicit BFS
+        for (int i = 0; i < nums.length - 1; ++i) {
+            farthest = Math.max(farthest, i + nums[i]);
+            if (farthest >= nums.length - 1) {
+                ++ans;
+                break;
+            }
+            if (i == end) {   // Visited all the items on the current level
+                ++ans;          // Increment the level
+                end = farthest; // Make the queue size for the next level
             }
         }
-        return dict.get(nums.length - 1);
+        return ans;
     }
 }

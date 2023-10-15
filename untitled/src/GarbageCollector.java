@@ -8,10 +8,11 @@ public class GarbageCollector {
 
     public GarbageCollector() {
     }
+
     public static int count = 0;
 
     public static void main(String[] args) throws Throwable {
-        for (int i = 0 ; i < 1000000; i++) {
+        for (int i = 0; i < 1000000; i++) {
 
             GarbageCollector cat = new GarbageCollector();
             cat = null;//вот здесь первый объект становится доступен сборщику мусора

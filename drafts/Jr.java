@@ -6,12 +6,19 @@ import java.util.Scanner;
 
 public class Jr {
     public static int[] array;
+    private static int[] ints;
+
 
     public static void main(String[] args) throws Exception {
         //напишите тут ваш код
         Scanner console = new Scanner(System.in);
         int N  = console.nextInt();
-        array = new int[N];
+
+
+
+
+
+
         for(int i=0; i<array.length; i++){
             array[N] = console.nextInt();
         }

@@ -7,33 +7,34 @@ import java.util.Scanner;
 import static java.lang.System.in;
 
 public class Main {
-    public static void getWord() {
-//            BufferedReader reader = new BufferedReader(new FileReader("russian_nouns.txt"));
+    public static ArrayList<String> getWord() {
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
         InputStream is = classloader.getResourceAsStream("russian_nouns.txt");
 
-        Scanner s = new Scanner(is);
-        ArrayList<String> list = new ArrayList<String>();
-        while (s.hasNext()) {
-            list.add(s.next());
+        assert is != null;
+        Scanner scanner = new Scanner(is);
+        ArrayList<String> listWords = new ArrayList<>();
+        while (scanner.hasNext()) {
+            listWords.add(scanner.next());
         }
-        System.out.println(list.get(0));
-        s.close();
+        scanner.close();
+        return listWords;
     }
 
     public static void main(String[] args) {
-        getWord();
+        ArrayList<String> listWord = getWord();
+        System.out.println(listWord.get(0));
+
         System.out.println("Введите команду:");
         Scanner scanner = new Scanner(in);
         int command = scanner.nextInt();
 
         while (command != 0) {
             switch (command) {
-                case (0):
-                    break;
-                default:
-                    break;
-
+                case (1) -> System.out.println("Введи букву");
+                case (3) -> System.out.println("Пропустить код");
+                default -> {
+                }
             }
             command = scanner.nextInt();
         }

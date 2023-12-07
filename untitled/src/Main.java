@@ -1,13 +1,11 @@
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Collections;
-import java.util.Set;
+import java.util.*;
 
 public class Main {
 
     public static void main(String[] args) {
+
+        System.out.println("Hello!");
+
         System.out.println(jump(new int[]{2, 3, 1, 0, 0, 1, 4}));
     }
 

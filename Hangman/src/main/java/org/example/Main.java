@@ -7,14 +7,13 @@ import java.util.Scanner;
 
 import static java.lang.System.in;
 
-
 public class Main {
     public static ArrayList<String> getWord() {
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
         InputStream is = classloader.getResourceAsStream("russian_nouns.txt");
 
         assert is != null;
-        Scanner scanner = new Scanner(is);
+        Scanner scanner = new Scanner(is, "UTF-8");
         ArrayList<String> listWords = new ArrayList<>();
         while (scanner.hasNext()) {
             listWords.add(scanner.next());
@@ -43,22 +42,23 @@ public class Main {
 
                     String currentStateString = copies("_", word.length());
                     StringBuilder currentState = new StringBuilder(currentStateString);
-
-                    System.out.println("Состояние виселицы:");
-                    System.out.println(currentState);
-
+                    System.out.println(word);
                     // Написать условие работы цикла
                     while (currentState.toString().contains("_")) {
+                        System.out.println("Состояние виселицы:");
+                        System.out.println(currentState);
                         System.out.println("Введи букву:");
                         char c = scanner.next().charAt(0);
+                        String letter = String.valueOf(c);
+                        System.out.println(letter);
                         if (word.contains(String.valueOf(c))) {
-                            int indexToReplace = currentState.indexOf((String.valueOf(c)));
+                            int indexToReplace = currentState.indexOf(letter);
+                            System.out.println(indexToReplace);
                             currentState.setCharAt(indexToReplace, c);
                             System.out.println();
                         }
                     }
                 }
-
 
                 case (3) -> System.out.println("Пропустить код");
                 default -> {

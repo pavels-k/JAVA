@@ -1,11 +1,12 @@
 package org.example;
 
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
 
-import static java.lang.System.in;
 
 public class Main {
     public static ArrayList<String> getWord() {
@@ -13,7 +14,7 @@ public class Main {
         InputStream is = classloader.getResourceAsStream("russian_nouns.txt");
 
         assert is != null;
-        Scanner scanner = new Scanner(is, "UTF-8");
+        Scanner scanner = new Scanner(is, "UTF-8");  //, StandardCharsets.UTF_8);
         ArrayList<String> listWords = new ArrayList<>();
         while (scanner.hasNext()) {
             listWords.add(scanner.next());
@@ -30,7 +31,11 @@ public class Main {
 
         System.out.println("1 - Начать игру");
         System.out.println("0 - Выйти из игры");
-        Scanner scanner = new Scanner(in);
+
+//        Locale loc = new Locale("ru");
+        Scanner scanner = new Scanner(System.in, "866"); //, "windows-1251");
+//        scanner.useLocale(loc);
+
         int command = scanner.nextInt();
 
         while (command != 0) {
@@ -48,11 +53,13 @@ public class Main {
                         System.out.println("Состояние виселицы:");
                         System.out.println(currentState);
                         System.out.println("Введи букву:");
+
                         char c = scanner.next().charAt(0);
+
                         String letter = String.valueOf(c);
                         System.out.println(letter);
                         if (word.contains(String.valueOf(c))) {
-                            int indexToReplace = currentState.indexOf(letter);
+                            int indexToReplace = word.indexOf(letter);
                             System.out.println(indexToReplace);
                             currentState.setCharAt(indexToReplace, c);
                             System.out.println();

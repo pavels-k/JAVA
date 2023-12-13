@@ -1,11 +1,9 @@
 package org.example;
 
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
-
 
 public class Main {
     public static ArrayList<String> getWord() {
@@ -13,7 +11,7 @@ public class Main {
         InputStream is = classloader.getResourceAsStream("russian_nouns.txt");
 
         assert is != null;
-        Scanner scanner = new Scanner(is, StandardCharsets.UTF_8);
+        Scanner scanner = new Scanner(is, "UTF-8");
         ArrayList<String> listWords = new ArrayList<>();
         while (scanner.hasNext()) {
             listWords.add(scanner.next());
@@ -34,21 +32,27 @@ public class Main {
         return sb.toString();
     }
 
-    public static void main(String[] args) {
-        ArrayList<String> listWord = getWord();
-        System.out.println(listWord.get(0));
 
+    public static void printGame(){
         System.out.println("Введите команду:");
-
         System.out.println("1 - Начать игру");
         System.out.println("0 - Выйти из игры");
+    }
+
+    // toDo: Нужно доделать условие проигрыша и состояние виселицы
+    public static void main(String[] args) {
+        ArrayList<String> listWord = getWord();
+
+        printGame();
+
 
 
         String os = System.getProperty("os.name");
         String encoding;
-        if (os.equals("Mac OS X")) encoding = "UTF-8";
-        else encoding = "866";
-
+        if (os.equals("Mac OS X"))
+            encoding = "UTF-8";
+        else
+            encoding = "866";
         Scanner scanner = new Scanner(System.in, encoding);
 
         int command = scanner.nextInt();
@@ -58,14 +62,16 @@ public class Main {
                 case (1) -> {
                     Random rand = new Random();
                     int randIndex = rand.nextInt(listWord.size());
-                    String word = listWord.get(randIndex);
+                    StringBuilder word = new StringBuilder(listWord.get(randIndex));
 
                     String currentStateString = copies("_", word.length());
                     StringBuilder currentState = new StringBuilder(currentStateString);
                     System.out.println(word);
+                    StringBuilder stepHangman = new StringBuilder(copies("_", 5));
+                    int countMistake = 0;
                     // Написать условие работы цикла
                     while (currentState.toString().contains("_")) {
-                        System.out.println("Состояние виселицы:");
+                        System.out.println("Загаданное слово:");
                         System.out.println(currentState);
                         System.out.println("Введи букву:");
 
@@ -73,12 +79,25 @@ public class Main {
 
                         String letter = String.valueOf(c);
                         System.out.println(letter);
-                        if (word.contains(String.valueOf(c))) {
+
+                        if (word.toString().contains(String.valueOf(c))) {
                             int indexToReplace = word.indexOf(letter);
-                            System.out.println(indexToReplace);
-                            currentState.setCharAt(indexToReplace, c);
-                            System.out.println();
+                            while (indexToReplace >= 0) {
+
+                                System.out.println(indexToReplace);
+                                currentState.setCharAt(indexToReplace, c);
+                                word.setCharAt(indexToReplace, '_');
+                                System.out.println(word);
+
+                                indexToReplace = word.indexOf(letter, indexToReplace + 1);
+                            }
+
+                        } else {
+                            System.out.println("Состояние виселицы:");
+                            stepHangman.setCharAt(countMistake, 'x');
+                            countMistake++;
                         }
+
                     }
                 }
 
@@ -86,10 +105,8 @@ public class Main {
                 default -> {
                 }
             }
-            System.out.println("Введите команду:");
+            printGame();
             command = scanner.nextInt();
         }
     }
-
-
 }

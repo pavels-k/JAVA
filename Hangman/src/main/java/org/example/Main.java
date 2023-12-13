@@ -3,7 +3,6 @@ package org.example;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -14,13 +13,25 @@ public class Main {
         InputStream is = classloader.getResourceAsStream("russian_nouns.txt");
 
         assert is != null;
-        Scanner scanner = new Scanner(is, "UTF-8");  //, StandardCharsets.UTF_8);
+        Scanner scanner = new Scanner(is, StandardCharsets.UTF_8);
         ArrayList<String> listWords = new ArrayList<>();
         while (scanner.hasNext()) {
             listWords.add(scanner.next());
         }
         scanner.close();
         return listWords;
+    }
+
+    public static String copies(String s, int n) {
+        StringBuilder sb = new StringBuilder();
+        if (n > 0) {
+            int i = 0;
+            while (i < n) {
+                sb.append(s);
+                i++;
+            }
+        }
+        return sb.toString();
     }
 
     public static void main(String[] args) {
@@ -32,9 +43,13 @@ public class Main {
         System.out.println("1 - Начать игру");
         System.out.println("0 - Выйти из игры");
 
-//        Locale loc = new Locale("ru");
-        Scanner scanner = new Scanner(System.in, "866"); //, "windows-1251");
-//        scanner.useLocale(loc);
+
+        String os = System.getProperty("os.name");
+        String encoding;
+        if (os.equals("Mac OS X")) encoding = "UTF-8";
+        else encoding = "866";
+
+        Scanner scanner = new Scanner(System.in, encoding);
 
         int command = scanner.nextInt();
 
@@ -76,15 +91,5 @@ public class Main {
         }
     }
 
-    public static String copies(String s, int n) {
-        StringBuilder sb = new StringBuilder();
-        if (n > 0) {
-            int i = 0;
-            while (i < n) {
-                sb.append(s);
-                i++;
-            }
-        }
-        return sb.toString();
-    }
+
 }

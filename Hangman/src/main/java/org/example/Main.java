@@ -45,8 +45,6 @@ public class Main {
 
         printGame();
 
-
-
         String os = System.getProperty("os.name");
         String encoding;
         if (os.equals("Mac OS X"))
@@ -73,7 +71,7 @@ public class Main {
                     while (currentState.toString().contains("_")) {
                         System.out.println("Загаданное слово:");
                         System.out.println(currentState);
-                        System.out.println("Введи букву:");
+                        System.out.println("Введите букву:");
 
                         char c = scanner.next().charAt(0);
 
@@ -108,5 +106,6 @@ public class Main {
             printGame();
             command = scanner.nextInt();
         }
+        scanner.close();
     }
 }

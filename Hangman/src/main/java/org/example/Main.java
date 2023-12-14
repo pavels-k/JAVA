@@ -2,6 +2,7 @@ package org.example;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -14,7 +15,10 @@ public class Main {
         Scanner scanner = new Scanner(is, "UTF-8");
         ArrayList<String> listWords = new ArrayList<>();
         while (scanner.hasNext()) {
-            listWords.add(scanner.next());
+            String word = scanner.next();
+            if (word.length() >= 5) {
+                listWords.add(word);
+            }
         }
         scanner.close();
         return listWords;
@@ -64,18 +68,31 @@ public class Main {
 
                     String currentStateString = copies("_", word.length());
                     StringBuilder currentState = new StringBuilder(currentStateString);
-                    StringBuilder stepHangman = new StringBuilder(copies("o", 5));
+                    final int countTry = 7;
+                    StringBuilder stepHangman = new StringBuilder(copies("o", countTry));
                     int countMistake = 0;
-                    // Написать условие работы цикла
-                    while (currentState.toString().contains("_") & (countMistake < 5)) {
+                    HashSet<String> usedLetters = new HashSet<>();
+
+                    while (currentState.toString().contains("_") & (countMistake < countTry)) {
                         System.out.println("Загаданное слово:");
                         System.out.println(currentState);
                         System.out.println("\nВведите букву:");
+                        char c = 's';
+                        c = Character.toLowerCase(scanner.next().charAt(0)); // Character.toLowerCase(
 
-                        char c = scanner.next().charAt(0);
+                        while (!Character.UnicodeBlock.of(c).equals(Character.UnicodeBlock.CYRILLIC)
+                                | usedLetters.contains(String.valueOf(c))) {
+                            if (usedLetters.contains(String.valueOf(c))) {
+                                System.out.println("\nЭта буква, уже использовалась! Введите другую:");
+                            } else {
+                                System.out.println("\nЭто не кириллица! Введите букву кириллицы: ");
+                            }
+
+                            c = Character.toLowerCase(scanner.next().charAt(0)); // Character.toLowerCase(
+                        }
 
                         String letter = String.valueOf(c);
-
+                        usedLetters.add(letter);
                         if (word.toString().contains(String.valueOf(c))) {
                             System.out.println("БИНГО!\n");
 
@@ -84,7 +101,6 @@ public class Main {
 
                                 currentState.setCharAt(indexToReplace, c);
                                 word.setCharAt(indexToReplace, '_');
-                                // System.out.println(word);
 
                                 indexToReplace = word.indexOf(letter, indexToReplace + 1);
                             }
@@ -96,23 +112,23 @@ public class Main {
 
                             countMistake++;
                         }
-                        System.out.println("Состояние виселицы:");
+                        System.out.println("Использованные буквы:");
+
+                        System.out.println(usedLetters.toString());
+
+                        System.out.println("\nСостояние виселицы:");
 
                         System.out.println(stepHangman);
 
                         System.out.println();
                     }
                     if (stepHangman.toString().contains("o")) {
-                        System.out.println("Вы выжили!\n");
+                        System.out.println("Миссия выполнена!\n");
                     } else {
-                        System.out.println("Вы сдохли!\n");
+                        System.out.println("Потрачено!\n");
                         System.out.println("Ну а правильное слово: " + strartWord + "\n");
 
                     }
-                }
-
-                case (3) -> System.out.println("Пропустить код");
-                default -> {
                 }
             }
             printGame();

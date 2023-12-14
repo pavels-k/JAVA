@@ -43,7 +43,7 @@ public class Main {
         System.out.println("0 - Выйти из игры");
     }
 
-    // toDo: Нужно доделать условие проигрыша и состояние виселицы
+    // Код игры Виселица
     public static void main(String[] args) {
         ArrayList<String> listWord = getWord();
 
@@ -87,7 +87,7 @@ public class Main {
                             System.out.println("\nЭто не кириллица! Введите букву кириллицы: ");
                         }
 
-                        c = Character.toLowerCase(scanner.next().charAt(0)); // Character.toLowerCase(
+                        c = Character.toLowerCase(scanner.next().charAt(0));
                     }
 
                     String letter = String.valueOf(c);

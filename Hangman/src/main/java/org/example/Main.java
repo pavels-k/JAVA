@@ -32,9 +32,8 @@ public class Main {
         return sb.toString();
     }
 
-
-    public static void printGame(){
-        System.out.println("Введите команду:");
+    public static void printGame() {
+        System.out.println("Введите команду:\n");
         System.out.println("1 - Начать игру");
         System.out.println("0 - Выйти из игры");
     }
@@ -60,41 +59,54 @@ public class Main {
                 case (1) -> {
                     Random rand = new Random();
                     int randIndex = rand.nextInt(listWord.size());
-                    StringBuilder word = new StringBuilder(listWord.get(randIndex));
+                    String strartWord = listWord.get(randIndex);
+                    StringBuilder word = new StringBuilder(strartWord);
 
                     String currentStateString = copies("_", word.length());
                     StringBuilder currentState = new StringBuilder(currentStateString);
-                    System.out.println(word);
-                    StringBuilder stepHangman = new StringBuilder(copies("_", 5));
+                    StringBuilder stepHangman = new StringBuilder(copies("o", 5));
                     int countMistake = 0;
                     // Написать условие работы цикла
-                    while (currentState.toString().contains("_")) {
+                    while (currentState.toString().contains("_") & (countMistake < 5)) {
                         System.out.println("Загаданное слово:");
                         System.out.println(currentState);
-                        System.out.println("Введите букву:");
+                        System.out.println("\nВведите букву:");
 
                         char c = scanner.next().charAt(0);
 
                         String letter = String.valueOf(c);
-                        System.out.println(letter);
 
                         if (word.toString().contains(String.valueOf(c))) {
+                            System.out.println("БИНГО!\n");
+
                             int indexToReplace = word.indexOf(letter);
                             while (indexToReplace >= 0) {
 
-                                System.out.println(indexToReplace);
                                 currentState.setCharAt(indexToReplace, c);
                                 word.setCharAt(indexToReplace, '_');
-                                System.out.println(word);
+                                // System.out.println(word);
 
                                 indexToReplace = word.indexOf(letter, indexToReplace + 1);
                             }
 
                         } else {
-                            System.out.println("Состояние виселицы:");
+                            System.out.println("МИМО!\n");
+
                             stepHangman.setCharAt(countMistake, 'x');
+
                             countMistake++;
                         }
+                        System.out.println("Состояние виселицы:");
+
+                        System.out.println(stepHangman);
+
+                        System.out.println();
+                    }
+                    if (stepHangman.toString().contains("o")) {
+                        System.out.println("Вы выжили!\n");
+                    } else {
+                        System.out.println("Вы сдохли!\n");
+                        System.out.println("Ну а правильное слово: " + strartWord + "\n");
 
                     }
                 }

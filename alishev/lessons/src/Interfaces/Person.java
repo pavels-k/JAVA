@@ -10,7 +10,10 @@ public class Person implements Info{
     public void sayHello(){
         System.out.println("Hello");
     }
-    public void showInfo(){
-        System.out.println("Id is" + this.id);
+
+
+    @Override
+    public void showInfo() {
+        System.out.println("Name is " + this.name);
     }
 }

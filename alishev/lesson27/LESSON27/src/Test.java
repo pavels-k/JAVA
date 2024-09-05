@@ -1,13 +1,13 @@
-import Forest.Squirell;
-import Forest.Tree;
+import Packet1.Person;
 
 import java.util.Scanner;
 
 public class Test {
-    public static void main(String[] args) {
-        Tree tree1 = new Tree();
-        Squirell squirell = new Squirell();
+    public int id;
 
-        Scanner scanner = new Scanner(System.in);
+    public static void main(String[] args) {
+          // public, private, default, protected
+        Person person1 = new Person();
+        person1.name = "Bob";
     }
 }

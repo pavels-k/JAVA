@@ -1,4 +1,17 @@
+import java.util.UUID;
+
 public class Herbivore extends Creature{
+    private String id;
+
+    public Herbivore(){
+        this.id = UUID.randomUUID().toString();
+    }
+
+    // сделать ход
+    public void makeMove(){
+        ;
+    }
+
     // найти ресурс
     // движение
     // eat

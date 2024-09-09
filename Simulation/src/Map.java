@@ -15,7 +15,7 @@ public class Map {
         for (int i = 0; i < M; i++) {
             ArrayList<Integer> row = new ArrayList<>();
             for (int j = 0; j < N; j++) {
-                row.add(0);hjghj
+                row.add(0);
             }
             arrayList.add(row);
         }

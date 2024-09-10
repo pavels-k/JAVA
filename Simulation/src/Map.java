@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Map {
     //  Хранить координаты каждого существа
@@ -24,8 +25,15 @@ public class Map {
 
     // расставить существ
     public void arrangeСreatures(int countHerbivore, int countPredator){
+        Random rand = new Random();
         for (int i = 0; i < countHerbivore; i++) {
-            ;
+
+            int randomM = rand.nextInt((M) + 1); // Generates a number between min and max
+            int randomN = rand.nextInt((N) + 1); // Generates a number between min and max
+
+            if (arrayList.get(randomM).get(randomN) != 0){
+                arrayList.get(randomM).set(randomN, 1);
+            }
         }
         for (int i = 0; i < countPredator; i++) {
             ;

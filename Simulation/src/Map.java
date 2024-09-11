@@ -1,5 +1,5 @@
-import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 public class Map {
@@ -26,17 +26,32 @@ public class Map {
     // расставить существ
     public void arrangeСreatures(int countHerbivore, int countPredator){
         Random rand = new Random();
+        int isOccupied;
         for (int i = 0; i < countHerbivore; i++) {
+            isOccupied = 0;
+            while (isOccupied == 0) {
+                int randomM = rand.nextInt((M) + 1);
+                int randomN = rand.nextInt((N) + 1);
 
-            int randomM = rand.nextInt((M) + 1); // Generates a number between min and max
-            int randomN = rand.nextInt((N) + 1); // Generates a number between min and max
-
-            if (arrayList.get(randomM).get(randomN) != 0){
-                arrayList.get(randomM).set(randomN, 1);
+                if (arrayList.get(randomM).get(randomN) != 0) {
+                    arrayList.get(randomM).set(randomN, 1); // 1 - Хищник
+                    isOccupied = 1;
+                }
             }
+
         }
         for (int i = 0; i < countPredator; i++) {
-            ;
+            isOccupied = 0;
+            while (isOccupied == 0) {
+                int randomM = rand.nextInt((M) + 1);
+                int randomN = rand.nextInt((N) + 1);
+
+                if (arrayList.get(randomM).get(randomN) != 0) {
+                    arrayList.get(randomM).set(randomN, 1); // 1 - Хищник
+                    isOccupied = 1;
+                }
+            }
+
         }
     }
 

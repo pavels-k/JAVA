@@ -39,6 +39,7 @@ public class Map {
                 }
             }
 
+
         }
         for (int i = 0; i < countPredator; i++) {
             isOccupied = 0;

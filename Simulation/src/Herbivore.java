@@ -1,5 +1,4 @@
-import java.util.UUID;
-
+// травоядное
 public class Herbivore extends Creature{
 
 
@@ -9,8 +8,11 @@ public class Herbivore extends Creature{
     }
 
     // найти ресурс
+
     // движение
+
     // eat
+
     // + получить урон
     public void takeDamage(int damage){
         this.hp -= damage;

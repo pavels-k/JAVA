@@ -1,10 +1,14 @@
 public class Simulation {
+
+    // инициализировать карту
     static Map map;
     static int countStep;
 
     public static void initActions(int countHerbivore, int countPredator) {
         map = new Map(countHerbivore, countPredator);
     }
+
+    // отрисовать карту
     public static void renderMap() {
         for (int i = 0; i < map.M; i++) {
             for (int j = 0; j < map.N; j++) {
@@ -20,6 +24,11 @@ public class Simulation {
 
         int countHerbivore = 5;
         int countPredator = 3;
+
+        int countGrass = 5;
+        int countRock = 4;
+        int countTree = 3
+
         initActions(countHerbivore, countPredator);
         renderMap();
     }

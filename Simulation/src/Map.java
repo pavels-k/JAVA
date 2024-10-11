@@ -15,7 +15,7 @@ public class Map {
     // 2 - травоядное
     private static ArrayList<ArrayList<String>> arrayList = new ArrayList<>();
 
-    public Map(int countHerbivore, int countPredator) {
+    public Map(int countHerbivore, int countPredator, int countGrass, int countRock, int countTree) {
         mapObjects = new HashMap<>();
         for (int i = 0; i < M; i++) {
             ArrayList<String> row = new ArrayList<>();
@@ -24,44 +24,46 @@ public class Map {
             }
             arrayList.add(row);
         }
-        arrangeСreatures(countHerbivore, countPredator);
+        arrangeOnMap(countHerbivore, countPredator, countGrass, countRock, countTree);
+
+
     }
 
-
-    // расставить существ
-    public void arrangeСreatures(int countHerbivore, int countPredator){
+    public void arrangeEntity(int countEntity, String symbol) {
         Random rand = new Random();
         int isOccupied;
-        for (int i = 0; i < countHerbivore; i++) {
+        for (int i = 0; i < countEntity; i++) {
             isOccupied = 0;
             while (isOccupied == 0) {
-                int randomM = rand.nextInt((M - 1));
-                int randomN = rand.nextInt((N - 1));
+                int randomX = rand.nextInt((M - 1));
+                int randomY = rand.nextInt((N - 1));
 
-                if (arrayList.get(randomM).get(randomN).equals("O")) {
-                    arrayList.get(randomM).set(randomN, "T"); // 2 - Травоядное
+                if (arrayList.get(randomX).get(randomY).equals("O")) {
+                    arrayList.get(randomX).set(randomY, symbol);
                     isOccupied = 2;
+                    if (symbol.equals("H")) {
+                        Herbivore herbivore = new Herbivore(randomX, randomY);
+                        addCreatureToMap(herbivore);
+                    } else if (symbol.equals("P")) {
+                        Predator predator = new Predator(randomX, randomY);
+                        addCreatureToMap(predator);
+                    }
                 }
             }
-
-
-        }
-        for (int i = 0; i < countPredator; i++) {
-            isOccupied = 0;
-            while (isOccupied == 0) {
-                int randomM = rand.nextInt((M) - 1);
-                int randomN = rand.nextInt((N) - 1);
-
-                if (arrayList.get(randomM).get(randomN).equals("O")) {
-                    arrayList.get(randomM).set(randomN, "P"); // 1 - Хищник
-                    isOccupied = 1;
-                }
-            }
-
         }
     }
 
-    public void addObject(Creature creature){
+    // расставить существ
+    public void arrangeOnMap(int countHerbivore, int countPredator, int countGrass, int countRock, int countTree) {
+
+        arrangeEntity(countHerbivore, "H");
+        arrangeEntity(countPredator, "P");
+        arrangeEntity(countGrass, "G");
+        arrangeEntity(countRock, "R");
+        arrangeEntity(countTree, "T");
+    }
+
+    public void addCreatureToMap(Creature creature) {
         mapObjects.put(creature.getId(), creature);
     }
 

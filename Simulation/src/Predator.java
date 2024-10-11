@@ -3,14 +3,16 @@ import java.util.UUID;
 public class Predator extends Creature{
     private String id;
 
-    public Predator(){
+    public Predator(int x, int y){
+        super(2, x, y);
         this.id = UUID.randomUUID().toString();
     }
 
 
     // сделать ход
-    public void makeMove(){
+    public void makeMove(Map map) {
         ;
+
     }
 
     private int attackPower;

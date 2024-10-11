@@ -2,8 +2,14 @@
 public class Herbivore extends Creature{
 
 
+    Herbivore(int x, int y) {
+        super(1, x, y);
+    }
+
     // сделать ход
-    public void makeMove(){
+
+    public void makeMove(Map map) {
+
         ;
     }
 

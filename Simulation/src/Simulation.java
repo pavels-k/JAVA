@@ -4,8 +4,8 @@ public class Simulation {
     static Map map;
     static int countStep;
 
-    public static void initActions(int countHerbivore, int countPredator) {
-        map = new Map(countHerbivore, countPredator);
+    public static void initActions(int countHerbivore, int countPredator, int countGrass, int countRock, int countTree) {
+        map = new Map(countHerbivore, countPredator, countGrass, countRock, countTree);
     }
 
     // отрисовать карту
@@ -27,9 +27,9 @@ public class Simulation {
 
         int countGrass = 5;
         int countRock = 4;
-        int countTree = 3
+        int countTree = 3;
 
-        initActions(countHerbivore, countPredator);
+        initActions(countHerbivore, countPredator, countGrass, countRock, countTree);
         renderMap();
     }
 }

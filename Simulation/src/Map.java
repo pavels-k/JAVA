@@ -70,4 +70,8 @@ public class Map {
     public String getCellValue(int i, int j) {
         return arrayList.get(i).get(j);
     }
+
+    public String setCellValue(int i, int j, String symbol) {
+        return arrayList.get(i).set(j, symbol);
+    }
 }

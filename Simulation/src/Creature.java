@@ -16,11 +16,12 @@ public abstract class Creature extends Entity{
         this.y = y;
     }
     // - сделать ход
-    public abstract void makeMove(Map map);
 
     public String getId(){
         return id;
     }
 
 
+    // движение
+    public abstract void makeMove(Map map, Creature creature);
 }

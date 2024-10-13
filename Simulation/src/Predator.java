@@ -21,4 +21,7 @@ public class Predator extends Creature{
     private void attackHerbivore(Herbivore herbivore){
         herbivore.takeDamage(attackPower);
     }
+
+    public void makeMove(Map map, Creature creature) {
+    }
 }

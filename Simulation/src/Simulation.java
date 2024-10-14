@@ -8,6 +8,15 @@ public class Simulation {
         map = new Map(countHerbivore, countPredator, countGrass, countRock, countTree);
     }
 
+    public static Herbivore getHerbivore() {
+        for (Creature creature : Map.mapObjects.values()) {
+            if (creature instanceof Herbivore) {
+                return (Herbivore) creature;
+            }
+        }
+        return null;
+    }
+
     // отрисовать карту
     public static void renderMap() {
         for (int i = 0; i < map.M; i++) {
@@ -31,5 +40,7 @@ public class Simulation {
 
         initActions(countHerbivore, countPredator, countGrass, countRock, countTree);
         renderMap();
+        Herbivore herbivore = getHerbivore();
+//        System.out.println(herbivore.);
     }
 }

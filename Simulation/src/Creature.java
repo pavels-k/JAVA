@@ -1,8 +1,8 @@
 import java.util.UUID;
 
 public abstract class Creature extends Entity{
-    public int speed;
-    public int hp;
+    private int speed;
+    protected  int hp;
 
     public int x;
     public int y;

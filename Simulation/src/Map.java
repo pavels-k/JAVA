@@ -8,7 +8,8 @@ public class Map {
     final int M = 20; // Ширина карты
     final int N = 20; // Длина карты
 
-    private static HashMap<String, Creature> mapObjects;
+    // id, объект существа
+    public static HashMap<String, Creature> mapObjects;
 
     // 0 - свободно
     // 1 - хищник
@@ -25,7 +26,6 @@ public class Map {
             arrayList.add(row);
         }
         arrangeOnMap(countHerbivore, countPredator, countGrass, countRock, countTree);
-
 
     }
 
@@ -74,4 +74,5 @@ public class Map {
     public String setCellValue(int i, int j, String symbol) {
         return arrayList.get(i).set(j, symbol);
     }
+
 }

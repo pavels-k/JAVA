@@ -38,14 +38,15 @@ public class Herbivore extends Creature{
             int x = coordinates[0];
             int y = coordinates[1];
 
+
             // Выйди если проверяемая координата выходит за пределы видимости
-            if ((Math.abs(x - xCurrent) > 4) || (Math.abs(y - yCurrent) > 4)) {
+            if (isVisible(x, xCurrent, y, yCurrent)) {
                 continue;
             }
 
 
             // Если найдена трава
-            if (map.getCellValue(x, y).equals('G')) {
+            if (map.getCellValue(x, y).equals("G")) {
                 // понять направление, куда нужно идти
                 int[] direction = getTowards(x, y, xCurrent, yCurrent);
 
@@ -53,17 +54,16 @@ public class Herbivore extends Creature{
                 creature.x += direction[0];
                 creature.y += direction[1];
                 map.setCellValue(creature.x, creature.y, "G");
-
+                creature.addHp(20);
+                continue;
             }
 
-
+            // Добавить в очередь элемент
             for (int[] direction : directions) {
                 int newX = x + direction[0];
                 int newY = y + direction[1];
-                if (newX >= 0 && newX < map.M && newY >= 0 && newY < map.N) {
-                    if (map.getCellValue(newX, newY).equals("G")) { // трава
-//                        System.out.println(way.getFirst());
-                    }
+                if (isValid(map, newX, newY)) {
+                    queue.add(new int[]{newX, newY});
                 }
             }
         }
@@ -76,9 +76,16 @@ public class Herbivore extends Creature{
             return new int[]{x - xCurrent > 0 ? 1 : -1, 0};
         }
         return new int[]{0, y - yCurrent > 0 ? 1 : -1};
-
-
     }
+
+    private boolean isVisible(int x, int xCurrent, int y, int yCurrent) {
+        return (Math.abs(x - xCurrent) > 4) || (Math.abs(y - yCurrent) > 4);
+    }
+
+    private boolean isValid(Map map, int xCurrent, int yCurrent) {
+        return (xCurrent >= 0 && xCurrent < map.M && yCurrent >= 0 && yCurrent < map.N);
+    }
+
 
     // найти ресурс
 

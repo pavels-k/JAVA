@@ -53,6 +53,7 @@ public class Herbivore extends Creature{
                 creature.x += direction[0];
                 creature.y += direction[1];
                 map.setCellValue(creature.x, creature.y, "G");
+
             }
 
 

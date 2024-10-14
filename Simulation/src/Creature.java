@@ -22,6 +22,10 @@ public abstract class Creature extends Entity{
     }
 
 
+    public void addHp(int healthIncrement){
+        hp = Math.min(hp + healthIncrement, 100);
+    }
+
     // движение
     public abstract void makeMove(Map map, Creature creature);
 }

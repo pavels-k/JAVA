@@ -17,11 +17,11 @@ public class Herbivore extends Creature{
 
     // движение
     @Override
-    public void makeMove(Map map, Creature creature) {
+    public void makeMove(Map map) {
         // Пока не увидит траву
 
-        int xCurrent = creature.x;
-        int yCurrent = creature.y;
+        int xCurrent = this.x;
+        int yCurrent = this.y;
 
         List<int[]> directions = new ArrayList<>();
         directions.add(new int[]{1, 0});
@@ -32,6 +32,7 @@ public class Herbivore extends Creature{
         // максимум на 4 хода видит
         Queue<int[]> queue = new LinkedList<>();
         queue.add(new int[]{xCurrent, yCurrent});
+        boolean[][] visited = new boolean[map.M][map.N];
 
         while (!queue.isEmpty()) {
             int[] coordinates = queue.poll();
@@ -51,11 +52,12 @@ public class Herbivore extends Creature{
                 int[] direction = getTowards(x, y, xCurrent, yCurrent);
 
                 map.setCellValue(xCurrent, yCurrent, "O");
-                creature.x += direction[0];
-                creature.y += direction[1];
-                map.setCellValue(creature.x, creature.y, "G");
-                creature.addHp(20);
-                continue;
+                this.x += direction[0];
+                this.y += direction[1];
+                map.setCellValue(this.x, this.y, "G");
+                this.addHp(20);
+                return;
+
             }
 
             // Добавить в очередь элемент

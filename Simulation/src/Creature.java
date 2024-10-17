@@ -27,5 +27,5 @@ public abstract class Creature extends Entity{
     }
 
     // движение
-    public abstract void makeMove(Map map, Creature creature);
+    public abstract void makeMove(Map map);
 }

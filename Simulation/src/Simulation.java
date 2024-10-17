@@ -41,6 +41,10 @@ public class Simulation {
         initActions(countHerbivore, countPredator, countGrass, countRock, countTree);
         renderMap();
         Herbivore herbivore = getHerbivore();
-//        System.out.println(herbivore.);
+        System.out.println(herbivore.x);
+        System.out.println(herbivore.y);
+        herbivore.makeMove(map);
+        System.out.println(herbivore.x);
+        System.out.println(herbivore.y);
     }
 }

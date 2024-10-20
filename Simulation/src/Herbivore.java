@@ -1,12 +1,10 @@
-//import java.util.Map;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
 // травоядное
-public class Herbivore extends Creature{
+public class Herbivore extends Creature {
 
 
     Herbivore(int x, int y) {
@@ -15,7 +13,7 @@ public class Herbivore extends Creature{
 
     // сделать ход
 
-    // движение
+    // движение травоядного
     @Override
     public void makeMove(Map map) {
         // Пока не увидит траву
@@ -33,6 +31,8 @@ public class Herbivore extends Creature{
         Queue<int[]> queue = new LinkedList<>();
         queue.add(new int[]{xCurrent, yCurrent});
         boolean[][] visited = new boolean[map.M][map.N];
+        visited[xCurrent][yCurrent] = true;
+
 
         while (!queue.isEmpty()) {
             int[] coordinates = queue.poll();
@@ -51,10 +51,17 @@ public class Herbivore extends Creature{
                 // понять направление, куда нужно идти
                 int[] direction = getTowards(x, y, xCurrent, yCurrent);
 
+                // соседняя координата не должна быть пустой или травой
+                String CurrentPosition = map.getCellValue(x + direction[0], y + direction[0]);
+                if (CurrentPosition != "O" && CurrentPosition != "G") {
+                    continue;
+                }
+
+                // изменить координату травоядному
                 map.setCellValue(xCurrent, yCurrent, "O");
                 this.x += direction[0];
                 this.y += direction[1];
-                map.setCellValue(this.x, this.y, "G");
+                map.setCellValue(this.x, this.y, "H");
                 this.addHp(20);
                 return;
 
@@ -64,28 +71,28 @@ public class Herbivore extends Creature{
             for (int[] direction : directions) {
                 int newX = x + direction[0];
                 int newY = y + direction[1];
-                if (isValid(map, newX, newY)) {
+                if (isValid(map, newX, newY) && !visited[newX][newY]) {
                     queue.add(new int[]{newX, newY});
+                    visited[newX][newY] = true;
                 }
             }
         }
+        // если трава не найдена сделай шаг в любую сторону, но не в сторону хищника
+        for (int[] direction : directions) {
+            int newX = x + direction[0];
+            int newY = y + direction[1];
+            String currentPosition = map.getCellValue(newX, newY);
 
-        ;
-    }
-
-    private int[] getTowards(int x, int y, int xCurrent, int yCurrent) {
-        if (Math.abs(x - xCurrent) > Math.abs((y - yCurrent))) {
-            return new int[]{x - xCurrent > 0 ? 1 : -1, 0};
+            // Если позиция свободна
+            if (isValid(map, newX, newY) && currentPosition == "O") {
+                map.setCellValue(xCurrent, yCurrent, "O");
+                this.x += direction[0];
+                this.y += direction[1];
+                map.setCellValue(this.x, this.y, "H");
+                return;
+            }
         }
-        return new int[]{0, y - yCurrent > 0 ? 1 : -1};
-    }
 
-    private boolean isVisible(int x, int xCurrent, int y, int yCurrent) {
-        return (Math.abs(x - xCurrent) > 4) || (Math.abs(y - yCurrent) > 4);
-    }
-
-    private boolean isValid(Map map, int xCurrent, int yCurrent) {
-        return (xCurrent >= 0 && xCurrent < map.M && yCurrent >= 0 && yCurrent < map.N);
     }
 
 
@@ -95,9 +102,9 @@ public class Herbivore extends Creature{
     // eat
 
     // + получить урон
-    public void takeDamage(int damage){
+    public void takeDamage(int damage) {
         this.hp -= damage;
-        if (this.hp <= 0){
+        if (this.hp <= 0) {
             System.out.println("Травоядное уничтожено");
         }
     }

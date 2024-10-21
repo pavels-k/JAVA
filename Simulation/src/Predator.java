@@ -20,7 +20,7 @@ public class Predator extends Creature {
     // движение хищника
     @Override
     public void makeMove(Map map) {
-        // Пока не увидит траву
+        // Пока не увидит травоядного
 
         int xCurrent = this.x;
         int yCurrent = this.y;
@@ -55,12 +55,21 @@ public class Predator extends Creature {
                 // понять направление, куда нужно идти
                 int[] direction = getTowards(x, y, xCurrent, yCurrent);
 
+                // соседняя координата не должна быть пустой или травоядным
+                String CurrentPosition = map.getCellValue(x + direction[0], y + direction[0]);
+                if (CurrentPosition != "O" && CurrentPosition != "P") {
+                    continue;
+                }
+
                 // изменить координату хищнику
                 map.setCellValue(xCurrent, yCurrent, "O");
                 this.x += direction[0];
                 this.y += direction[1];
+
+                // 
+
                 map.setCellValue(this.x, this.y, "P");
-                this.addHp(20);
+                this.addHp(10); // когда
                 return;
 
             }
@@ -75,6 +84,21 @@ public class Predator extends Creature {
                 }
             }
         }
-        ;
+        // если трава не найдена сделай шаг в любую сторону, но не в сторону хищника
+        for (int[] direction : directions) {
+            int newX = x + direction[0];
+            int newY = y + direction[1];
+            String currentPosition = map.getCellValue(newX, newY);
+
+            // Если позиция свободна
+            if (isValid(map, newX, newY) && currentPosition == "O") {
+                map.setCellValue(xCurrent, yCurrent, "O");
+                this.x += direction[0];
+                this.y += direction[1];
+                map.setCellValue(this.x, this.y, "P");
+                return;
+            }
+        }
+
     }
 }

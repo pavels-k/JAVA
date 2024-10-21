@@ -51,7 +51,7 @@ public class Herbivore extends Creature {
                 // понять направление, куда нужно идти
                 int[] direction = getTowards(x, y, xCurrent, yCurrent);
 
-                // соседняя координата не должна быть пустой или травой
+                // соседняя координата должна быть пустой или травой
                 String CurrentPosition = map.getCellValue(x + direction[0], y + direction[0]);
                 if (CurrentPosition != "O" && CurrentPosition != "G") {
                     continue;

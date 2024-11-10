@@ -17,6 +17,8 @@ public abstract class Creature extends Entity{
     }
     // - сделать ход
 
+
+
     public String getId(){
         return id;
     }
@@ -47,4 +49,7 @@ public abstract class Creature extends Entity{
 
     // движение
     public abstract void makeMove(Map map);
+
+    // сделать действие
+
 }

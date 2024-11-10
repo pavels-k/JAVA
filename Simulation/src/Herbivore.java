@@ -108,4 +108,10 @@ public class Herbivore extends Creature {
             System.out.println("Травоядное уничтожено");
         }
     }
+
+    public void eatGrass() {
+        for (int[] direction : Simulation.DIRECTIONS) {
+            ;
+        }
+    }
 }

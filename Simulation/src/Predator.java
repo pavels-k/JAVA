@@ -9,6 +9,8 @@ public class Predator extends Creature {
     }
 
 
+
+
     private int attackPower;
 
     // переместиться

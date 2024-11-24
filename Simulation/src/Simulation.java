@@ -1,6 +1,6 @@
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class Simulation {
 
@@ -37,6 +37,17 @@ public class Simulation {
         for (Creature creature : Map.mapObjects.values()){
             if (creature instanceof Herbivore){
 //                creature. // поесть травы
+                int x = creature.x;
+                int y = creature.y;
+
+                for (int[] direction : DIRECTIONS) {
+                    if (map.getCellValue(x + direction[0], y + direction[1]).equals('G')) {
+
+                        map.setCellValue(x + direction[0], y + direction[1], "O");
+                        creature.addHp(20);
+                        break;
+                    }
+                }
             }
         }
     }

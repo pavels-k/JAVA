@@ -2,6 +2,7 @@ import java.util.*;
 
 public class Predator extends Creature {
     private String id;
+    private int attackPower;
 
     public Predator(int x, int y) {
         super(2, x, y);
@@ -9,11 +10,6 @@ public class Predator extends Creature {
     }
 
 
-
-
-    private int attackPower;
-
-    // переместиться
     // атаковать травоядное
     private void attackHerbivore(Herbivore herbivore) {
         herbivore.takeDamage(attackPower);
@@ -68,12 +64,9 @@ public class Predator extends Creature {
                 this.x += direction[0];
                 this.y += direction[1];
 
-                // 
-
                 map.setCellValue(this.x, this.y, "P");
                 this.addHp(10); // когда
                 return;
-
             }
 
             // Добавить в очередь элемент
@@ -101,6 +94,5 @@ public class Predator extends Creature {
                 return;
             }
         }
-
     }
 }

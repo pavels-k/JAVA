@@ -11,11 +11,10 @@ public class Map {
     // id, объект существа
     public static HashMap<String, Creature> mapObjects;
 
-    // 0 - свободно
-    // 1 - хищник
-    // 2 - травоядное
+    // O - свободная клетка
     private static ArrayList<ArrayList<String>> arrayList = new ArrayList<>();
 
+    // Генерация карты
     public Map(int countHerbivore, int countPredator, int countGrass, int countRock, int countTree) {
         mapObjects = new HashMap<>();
         for (int i = 0; i < M; i++) {
@@ -29,6 +28,7 @@ public class Map {
 
     }
 
+    // расставить группу существ
     public void arrangeEntity(int countEntity, String symbol) {
         Random rand = new Random();
         int isOccupied;
@@ -53,7 +53,7 @@ public class Map {
         }
     }
 
-    // расставить существ
+    // расставить на карту
     public void arrangeOnMap(int countHerbivore, int countPredator, int countGrass, int countRock, int countTree) {
 
         arrangeEntity(countHerbivore, "H");
@@ -63,6 +63,7 @@ public class Map {
         arrangeEntity(countTree, "T");
     }
 
+    // Добавить существо в хэшмапу mapObjects
     public void addCreatureToMap(Creature creature) {
         mapObjects.put(creature.getId(), creature);
     }

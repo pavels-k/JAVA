@@ -33,13 +33,13 @@ public class Simulation {
         }
     }
 
-    public static void makeAction(){
-        for (Creature creature : Map.mapObjects.values()){
-            if (creature instanceof Herbivore){
-//                creature. // поесть травы
-                int x = creature.x;
-                int y = creature.y;
+    public static void makeAction() {
+        for (Creature creature : Map.mapObjects.values()) {
+            int x = creature.x;
+            int y = creature.y;
 
+            // 1. Травоядное ест траву
+            if (creature instanceof Herbivore) {
                 for (int[] direction : DIRECTIONS) {
                     if (map.getCellValue(x + direction[0], y + direction[1]).equals('G')) {
 
@@ -49,9 +49,20 @@ public class Simulation {
                     }
                 }
             }
+
+            // 2. Хищник атакует травоядного
+            else if (creature instanceof Predator) {
+                for (int[] direction : DIRECTIONS) {
+                    if (map.getCellValue(x + direction[0], y + direction[1]).equals('H')) {
+
+//                        map.setCellValue(x + direction[0], y + direction[1], "O");
+//                        creature.addHp(20);
+                        break;
+                    }
+                }
+            }
         }
     }
-
 
     public static void initActions(int countHerbivore, int countPredator, int countGrass, int countRock, int countTree) {
         map = new Map(countHerbivore, countPredator, countGrass, countRock, countTree);

@@ -22,13 +22,13 @@ public class Simulation {
     static int countStep;
 
 
-    public void nextTurn(){
+    public void nextTurn() {
         makeStep();
         makeAction();
     }
 
-    public static void makeStep(){
-        for (Creature creature : Map.mapObjects.values()){
+    public static void makeStep() {
+        for (Creature creature : Map.mapObjects.values()) {
             creature.makeMove(map);
         }
     }
@@ -54,6 +54,8 @@ public class Simulation {
             else if (creature instanceof Predator) {
                 for (int[] direction : DIRECTIONS) {
                     if (map.getCellValue(x + direction[0], y + direction[1]).equals('H')) {
+                        // вытяни травоядного
+
 
 //                        map.setCellValue(x + direction[0], y + direction[1], "O");
 //                        creature.addHp(20);

@@ -55,10 +55,8 @@ public class Simulation {
                 for (int[] direction : DIRECTIONS) {
                     if (map.getCellValue(x + direction[0], y + direction[1]).equals('H')) {
                         // вытяни травоядного
-
-
-//                        map.setCellValue(x + direction[0], y + direction[1], "O");
-//                        creature.addHp(20);
+                        Herbivore herbivore = (Herbivore) Map.getCreatureByCoordinates(x + direction[0], y + direction[1]);
+                        herbivore.takeDamage(20);
                         break;
                     }
                 }

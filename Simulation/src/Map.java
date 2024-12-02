@@ -19,7 +19,7 @@ public class Map {
         for (int i = 0; i < M; i++) {
             ArrayList<String> row = new ArrayList<>();
             for (int j = 0; j < N; j++) {
-                row.add("O");
+                row.add(" ");
             }
             arrayList.add(row);
         }
@@ -71,7 +71,7 @@ public class Map {
         return arrayList.get(i).get(j);
     }
 
-    public String setCellValue(int i, int j, String symbol) {
+    public static String setCellValue(int i, int j, String symbol) {
         return arrayList.get(i).set(j, symbol);
     }
 
@@ -95,4 +95,14 @@ public class Map {
         return null; // Возвращаем null, если координаты некорректны или объект не найден
     }
 
+    // Метод для удаления объекта по ID
+    public static void removeCreature(String id, int x, int y) {
+        if (mapObjects.containsKey(id)) {
+            mapObjects.remove(id);
+            System.out.println("Creature with ID '" + id + "' has been removed.");
+        } else {
+            System.out.println("No creature found with ID '" + id + "'.");
+        }
+        setCellValue(x, y, " ");
+    }
 }

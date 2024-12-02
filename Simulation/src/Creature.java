@@ -18,6 +18,13 @@ public abstract class Creature extends Entity{
     // - сделать ход
 
 
+    public int getHp() {
+        return hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
 
     public String getId(){
         return id;

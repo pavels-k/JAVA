@@ -96,6 +96,7 @@ public class Herbivore extends Creature {
     }
 
 
+
     // найти ресурс
 
 

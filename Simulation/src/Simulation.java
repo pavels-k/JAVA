@@ -45,6 +45,8 @@ public class Simulation {
 
                         map.setCellValue(x + direction[0], y + direction[1], "O");
                         creature.addHp(20);
+                        ;
+
                         break;
                     }
                 }
@@ -57,7 +59,11 @@ public class Simulation {
                         // вытяни травоядного
                         Herbivore herbivore = (Herbivore) Map.getCreatureByCoordinates(x + direction[0], y + direction[1]);
                         herbivore.takeDamage(20);
-                        break;
+                        if (herbivore.getHp() == 0){
+                            herbivore = null;
+                            Map.removeCreature(herbivore.getId(), x, y);
+                        }
+                            break;
                     }
                 }
             }
@@ -111,6 +117,8 @@ public class Simulation {
 //        System.out.println(herbivore.y);
         System.out.println();
         renderMap();
+
+
 
     }
 }

@@ -48,10 +48,7 @@ public abstract class Creature extends Entity{
         return new int[]{0, y - yCurrent > 0 ? 1 : -1};
     }
 
-    // проверка границы карты
-    public boolean isValid(Map map, int xCurrent, int yCurrent) {
-        return (xCurrent >= 0 && xCurrent < map.M && yCurrent >= 0 && yCurrent < map.N);
-    }
+
 
 
     // движение

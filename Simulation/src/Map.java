@@ -9,7 +9,7 @@ public class Map {
     final int N = 20; // Длина карты
 
     // id, объект существа
-    public static HashMap<String, Creature> mapObjects;
+    public static HashMap<String, Entity> mapObjects;
 
     private static ArrayList<ArrayList<String>> arrayList = new ArrayList<>();
 
@@ -37,7 +37,7 @@ public class Map {
                 int randomX = rand.nextInt((M - 1));
                 int randomY = rand.nextInt((N - 1));
 
-                if (arrayList.get(randomX).get(randomY).equals("O")) {
+                if (arrayList.get(randomX).get(randomY).equals(" ")) {
                     arrayList.get(randomX).set(randomY, symbol);
                     isOccupied = 2;
                     if (symbol.equals("H")) {
@@ -76,7 +76,7 @@ public class Map {
     }
 
     // Метод для получения Creature по координатам
-    public static Creature getCreatureByCoordinates(int x, int y) {
+    public static Entity getCreatureByCoordinates(int x, int y) {
         if (x >= 0 && x < arrayList.size()) { // Проверяем, что x в пределах списка
             ArrayList<String> row = arrayList.get(x);
             if (y >= 0 && y < row.size()) { // Проверяем, что y в пределах строки
@@ -96,7 +96,7 @@ public class Map {
     }
 
     // Метод для удаления объекта по ID
-    public static void removeCreature(String id, int x, int y) {
+    public static void removeEntity(String id, int x, int y) {
         if (mapObjects.containsKey(id)) {
             mapObjects.remove(id);
             System.out.println("Creature with ID '" + id + "' has been removed.");
@@ -104,5 +104,10 @@ public class Map {
             System.out.println("No creature found with ID '" + id + "'.");
         }
         setCellValue(x, y, " ");
+    }
+
+    // проверка границы карты
+    public boolean isValid(int xCurrent, int yCurrent) {
+        return (xCurrent >= 0 && xCurrent < this.M && yCurrent >= 0 && yCurrent < this.N);
     }
 }

@@ -52,6 +52,9 @@ public class Herbivore extends Creature {
                 int[] direction = getTowards(x, y, xCurrent, yCurrent);
 
                 // соседняя координата должна быть пустой или травой
+
+                // Добавить проверку выхода заграницы
+
                 String CurrentPosition = map.getCellValue(x + direction[0], y + direction[0]);
                 if (CurrentPosition != "O" && CurrentPosition != "G") {
                     continue;
@@ -71,7 +74,7 @@ public class Herbivore extends Creature {
             for (int[] direction : directions) {
                 int newX = x + direction[0];
                 int newY = y + direction[1];
-                if (isValid(map, newX, newY) && !visited[newX][newY]) {
+                if (map.isValid(newX, newY) && !visited[newX][newY]) {
                     queue.add(new int[]{newX, newY});
                     visited[newX][newY] = true;
                 }
@@ -84,7 +87,7 @@ public class Herbivore extends Creature {
             String currentPosition = map.getCellValue(newX, newY);
 
             // Если позиция свободна
-            if (isValid(map, newX, newY) && currentPosition == "O") {
+            if (map.isValid(newX, newY) && currentPosition == "O") {
                 map.setCellValue(xCurrent, yCurrent, "O");
                 this.x += direction[0];
                 this.y += direction[1];

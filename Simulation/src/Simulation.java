@@ -28,13 +28,28 @@ public class Simulation {
     }
 
     public static void makeStep() {
-        for (Creature creature : Map.mapObjects.values()) {
+        for (Entity entity : Map.mapObjects.values()) {
+            Creature creature = null;
+            if (entity instanceof Creature) {
+                creature = (Creature) entity;
+            } else {
+                break;
+            }
             creature.makeMove(map);
+
         }
+
     }
 
     public static void makeAction() {
-        for (Creature creature : Map.mapObjects.values()) {
+        for (Entity entity : Map.mapObjects.values()) {
+            Creature creature = null;
+            if (entity instanceof Creature) {
+                creature = (Creature) entity;
+            } else {
+                break;
+            }
+
             int x = creature.x;
             int y = creature.y;
 
@@ -43,10 +58,11 @@ public class Simulation {
                 for (int[] direction : DIRECTIONS) {
                     if (map.getCellValue(x + direction[0], y + direction[1]).equals('G')) {
 
-                        map.setCellValue(x + direction[0], y + direction[1], "O");
-                        creature.addHp(20);
-                        ;
+                        map.setCellValue(x + direction[0], y + direction[1], " ");
 
+                        Grass grass = (Grass) Map.getCreatureByCoordinates(x + direction[0], y + direction[1]);
+                        creature.addHp(grass.getHeal());
+                        grass = null;
                         break;
                     }
                 }
@@ -59,11 +75,11 @@ public class Simulation {
                         // вытяни травоядного
                         Herbivore herbivore = (Herbivore) Map.getCreatureByCoordinates(x + direction[0], y + direction[1]);
                         herbivore.takeDamage(20);
-                        if (herbivore.getHp() == 0){
+                        if (herbivore.getHp() <= 0) {
                             herbivore = null;
-                            Map.removeCreature(herbivore.getId(), x, y);
+                            Map.removeEntity(herbivore.getId(), x, y);
                         }
-                            break;
+                        break;
                     }
                 }
             }
@@ -75,9 +91,9 @@ public class Simulation {
     }
 
     public static Herbivore getHerbivore() {
-        for (Creature creature : Map.mapObjects.values()) {
-            if (creature instanceof Herbivore) {
-                return (Herbivore) creature;
+        for (Entity entity : Map.mapObjects.values()) {
+            if (entity instanceof Herbivore) {
+                return (Herbivore) entity;
             }
         }
         return null;
@@ -86,11 +102,20 @@ public class Simulation {
     // отрисовать карту
     public static void renderMap() {
         for (int i = 0; i < map.M; i++) {
+            System.out.print('=');
+        }
+        System.out.println('=');
+
+        for (int i = 0; i < map.M; i++) {
             for (int j = 0; j < map.N; j++) {
                 System.out.print(map.getCellValue(i, j));
             }
             System.out.println();
         }
+        for (int i = 0; i < map.M; i++) {
+            System.out.print('=');
+        }
+        System.out.println('=');
     }
 
 
@@ -117,7 +142,6 @@ public class Simulation {
 //        System.out.println(herbivore.y);
         System.out.println();
         renderMap();
-
 
 
     }

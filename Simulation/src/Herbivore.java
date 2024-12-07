@@ -118,6 +118,20 @@ public class Herbivore extends Creature {
 
 
     // eat
+    public void doAction(Map map) {
+        for (int[] direction : Simulation.DIRECTIONS) {
+            if (map.getCellValue(x + direction[0], y + direction[1]).equals('G')) {
+
+                map.setCellValue(x + direction[0], y + direction[1], " ");
+
+                Grass grass = (Grass) Map.getCreatureByCoordinates(x + direction[0], y + direction[1]);
+                this.addHp(grass.getHeal());
+                grass = null;
+                break;
+            }
+        }
+    }
+
 
     // + получить урон
     public void takeDamage(int damage) {
@@ -127,9 +141,9 @@ public class Herbivore extends Creature {
         }
     }
 
-    public void eatGrass() {
-        for (int[] direction : Simulation.DIRECTIONS) {
-            ;
-        }
-    }
+//    public void eatGrass() {
+//        for (int[] direction : Simulation.DIRECTIONS) {
+//            ;
+//        }
+//}
 }

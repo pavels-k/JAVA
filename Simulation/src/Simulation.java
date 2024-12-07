@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 public class Simulation {
 
@@ -21,12 +22,7 @@ public class Simulation {
     static Map map;
     static int countStep;
 
-
-    public void nextTurn() {
-        makeStep();
-        makeAction();
-    }
-
+    // А) Сделать шаг
     public static void makeStep() {
         // Цикл по существам
         for (Entity entity : Map.mapObjects.values()) {
@@ -37,11 +33,10 @@ public class Simulation {
                 break;
             }
             creature.makeMove(map);
-
         }
-
     }
 
+    // Б) Сделать действие
     public static void makeAction() {
         for (Entity entity : Map.mapObjects.values()) {
             Creature creature = null;
@@ -56,38 +51,36 @@ public class Simulation {
 
             // 1. Травоядное ест траву
             if (creature instanceof Herbivore) {
-                for (int[] direction : DIRECTIONS) {
-                    if (map.getCellValue(x + direction[0], y + direction[1]).equals('G')) {
 
-                        map.setCellValue(x + direction[0], y + direction[1], " ");
 
-                        Grass grass = (Grass) Map.getCreatureByCoordinates(x + direction[0], y + direction[1]);
-                        creature.addHp(grass.getHeal());
-                        grass = null;
-                        break;
-                    }
-                }
             }
 
             // 2. Хищник атакует травоядного
             else if (creature instanceof Predator) {
                 for (int[] direction : DIRECTIONS) {
-                    if (map.getCellValue(x + direction[0], y + direction[1]).equals('H')) {
-                        // вытяни травоядного
-                        Herbivore herbivore = (Herbivore) Map.getCreatureByCoordinates(x + direction[0], y + direction[1]);
-                        herbivore.takeDamage(20);
-                        if (herbivore.getHp() <= 0) {
-                            herbivore = null;
-                            Map.removeEntity(herbivore.getId(), x, y);
+                    int newX = x + direction[0];
+                    int newY = y + direction[0];
+                    if (map.isValid(newX, newY)) {
+                        if (map.getCellValue(newX, newY).equals('H')) {
+                            // вытяни травоядного
+
+
+                            Herbivore herbivore = (Herbivore) Map.getCreatureByCoordinates(newX, newY);
+                            herbivore.takeDamage(20);
+                            if (herbivore.getHp() <= 0) {
+                                herbivore = null;
+                                Map.removeEntity(herbivore.getId(), x, y);
+                            }
+                            break;
                         }
-                        break;
                     }
                 }
             }
         }
     }
 
-    public static void initActions(int countHerbivore, int countPredator, int countGrass, int countRock, int countTree) {
+    public static void initActions(int countHerbivore, int countPredator, int countGrass, int countRock,
+                                   int countTree) {
         map = new Map(countHerbivore, countPredator, countGrass, countRock, countTree);
     }
 
@@ -100,23 +93,23 @@ public class Simulation {
         return null;
     }
 
-    // отрисовать карту
-    public static void renderMap() {
-        for (int i = 0; i < map.M; i++) {
-            System.out.print('=');
-        }
-        System.out.println('=');
+    // просимулировать и отрендерить один ход
+    public static void nextTurn() {
+        Renderer.renderMap(map);
+        makeStep();
+        makeAction();
 
-        for (int i = 0; i < map.M; i++) {
-            for (int j = 0; j < map.N; j++) {
-                System.out.print(map.getCellValue(i, j));
-            }
-            System.out.println();
-        }
-        for (int i = 0; i < map.M; i++) {
-            System.out.print('=');
-        }
-        System.out.println('=');
+    }
+
+
+    // запустить бесконечный цикл симуляции и рендеринга
+    public void startSimulation() {
+
+    }
+
+    // приостановить бесконечный цикл симуляции и рендеринга
+    public void pauseSimulation() {
+
     }
 
 
@@ -131,11 +124,16 @@ public class Simulation {
         int countTree = 3;
 
         initActions(countHerbivore, countPredator, countGrass, countRock, countTree);
-        renderMap();
 
-        makeStep();
-        System.out.println();
-        renderMap();
+
+//        Scanner scanner = new Scanner();
+
+
+        nextTurn();
+        nextTurn();
+        nextTurn();
+        nextTurn();
+
 
 
     }

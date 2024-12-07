@@ -28,6 +28,7 @@ public class Simulation {
     }
 
     public static void makeStep() {
+        // Цикл по существам
         for (Entity entity : Map.mapObjects.values()) {
             Creature creature = null;
             if (entity instanceof Creature) {
@@ -131,15 +132,8 @@ public class Simulation {
 
         initActions(countHerbivore, countPredator, countGrass, countRock, countTree);
         renderMap();
-//        Herbivore herbivore = getHerbivore();
-//        System.out.println(herbivore.x);
-//        System.out.println(herbivore.y);
-//        herbivore.makeMove(map);
-//        System.out.println(herbivore.x);
-//        System.out.println(herbivore.y);
+
         makeStep();
-//        System.out.println(herbivore.x);
-//        System.out.println(herbivore.y);
         System.out.println();
         renderMap();
 

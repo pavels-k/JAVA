@@ -55,18 +55,29 @@ public class Herbivore extends Creature {
 
                 // Добавить проверку выхода заграницы
 
-                String CurrentPosition = map.getCellValue(x + direction[0], y + direction[0]);
-                if (CurrentPosition != "O" && CurrentPosition != "G") {
-                    continue;
+
+                int newX = x + direction[0];
+                int newY = y + direction[0];
+
+                if (map.isValid(newX, newY)) {
+
+                    // соседняя координата не должна быть пустой или травоядным
+                    String CurrentPosition = map.getCellValue(newX, newY);
+
+                    if (CurrentPosition != " " && CurrentPosition != "G") {
+                        continue;
+                    }
+
+                    // изменить координату травоядному
+                    map.setCellValue(xCurrent, yCurrent, " ");
+                    this.x += direction[0];
+                    this.y += direction[1];
+                    map.setCellValue(this.x, this.y, "H");
+                    this.addHp(20);
+                    return;
+
                 }
 
-                // изменить координату травоядному
-                map.setCellValue(xCurrent, yCurrent, "O");
-                this.x += direction[0];
-                this.y += direction[1];
-                map.setCellValue(this.x, this.y, "H");
-                this.addHp(20);
-                return;
 
             }
 
@@ -80,24 +91,27 @@ public class Herbivore extends Creature {
                 }
             }
         }
-        // если трава не найдена сделай шаг в любую сторону, но не в сторону хищника
+        // если трава не найдена сделай шаг в любую сторону
         for (int[] direction : directions) {
             int newX = x + direction[0];
             int newY = y + direction[1];
-            String currentPosition = map.getCellValue(newX, newY);
 
-            // Если позиция свободна
-            if (map.isValid(newX, newY) && currentPosition == "O") {
-                map.setCellValue(xCurrent, yCurrent, "O");
-                this.x += direction[0];
-                this.y += direction[1];
-                map.setCellValue(this.x, this.y, "H");
-                return;
+
+            if (map.isValid(newX, newY)) {
+                String currentPosition = map.getCellValue(newX, newY);
+
+                // Если позиция свободна
+                if (currentPosition == " ") {
+                    map.setCellValue(xCurrent, yCurrent, " ");
+                    this.x += direction[0];
+                    this.y += direction[1];
+                    map.setCellValue(this.x, this.y, "H");
+                    return;
+                }
             }
         }
 
     }
-
 
 
     // найти ресурс

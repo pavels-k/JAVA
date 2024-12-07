@@ -10,11 +10,6 @@ public class Predator extends Creature {
     }
 
 
-    // атаковать травоядное
-    private void attackHerbivore(Herbivore herbivore) {
-        herbivore.takeDamage(attackPower);
-    }
-
     // движение хищника
     @Override
     public void makeMove(Map map) {
@@ -53,14 +48,22 @@ public class Predator extends Creature {
                 // понять направление, куда нужно идти
                 int[] direction = getTowards(x, y, xCurrent, yCurrent);
 
-                // соседняя координата не должна быть пустой или травоядным
-                String CurrentPosition = map.getCellValue(x + direction[0], y + direction[0]);
-                if (CurrentPosition != "O" && CurrentPosition != "P") {
-                    continue;
+                int newX = x + direction[0];
+                int newY = y + direction[1];
+
+                if (map.isValid(newX, newY)) {
+
+                    // соседняя координата не должна быть пустой или травоядным
+                    String CurrentPosition = map.getCellValue(newX, newY);
+
+
+                    if (CurrentPosition != " " && CurrentPosition != "P") {
+                        continue;
+                    }
                 }
 
                 // изменить координату хищнику
-                map.setCellValue(xCurrent, yCurrent, "O");
+                map.setCellValue(xCurrent, yCurrent, " ");
                 this.x += direction[0];
                 this.y += direction[1];
 
@@ -83,15 +86,17 @@ public class Predator extends Creature {
         for (int[] direction : directions) {
             int newX = x + direction[0];
             int newY = y + direction[1];
-            String currentPosition = map.getCellValue(newX, newY);
+            if (map.isValid(newX, newY)) {
+                String currentPosition = map.getCellValue(newX, newY);
 
-            // Если позиция свободна
-            if (map.isValid(newX, newY) && currentPosition == "O") {
-                map.setCellValue(xCurrent, yCurrent, "O");
-                this.x += direction[0];
-                this.y += direction[1];
-                map.setCellValue(this.x, this.y, "P");
-                return;
+                // Если позиция свободна
+                if (currentPosition == " ") {
+                    map.setCellValue(xCurrent, yCurrent, " ");
+                    this.x += direction[0];
+                    this.y += direction[1];
+                    map.setCellValue(this.x, this.y, "P");
+                    return;
+                }
             }
         }
     }

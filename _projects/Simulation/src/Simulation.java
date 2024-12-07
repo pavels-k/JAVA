@@ -1,26 +1,21 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import static java.lang.Thread.sleep;
 
 public class Simulation {
 
     public static final List<int[]> DIRECTIONS;
 
     static {
-        List<int[]> directions = new ArrayList<>();
-        directions.add(new int[]{1, 0});
-        directions.add(new int[]{-1, 0});
-        directions.add(new int[]{0, 1});
-        directions.add(new int[]{0, -1});
 
         // Сделаем список неизменяемым и присвоим его константе
-        DIRECTIONS = Collections.unmodifiableList(directions);
+        DIRECTIONS = List.of(new int[]{1, 0}, new int[]{-1, 0}, new int[]{0, 1}, new int[]{0, -1});
     }
 
     // инициализировать карту
     static Map map;
-    static int countStep;
+
 
     // А) Сделать шаг
     public static void makeStep() {
@@ -29,10 +24,8 @@ public class Simulation {
             Creature creature = null;
             if (entity instanceof Creature) {
                 creature = (Creature) entity;
-            } else {
-                break;
+                creature.makeMove(map);
             }
-            creature.makeMove(map);
         }
     }
 
@@ -42,40 +35,20 @@ public class Simulation {
             Creature creature = null;
             if (entity instanceof Creature) {
                 creature = (Creature) entity;
-            } else {
-                break;
             }
 
-            int x = creature.x;
-            int y = creature.y;
 
             // 1. Травоядное ест траву
             if (creature instanceof Herbivore) {
-
+                creature.doAction(map);
 
             }
-
             // 2. Хищник атакует травоядного
             else if (creature instanceof Predator) {
-                for (int[] direction : DIRECTIONS) {
-                    int newX = x + direction[0];
-                    int newY = y + direction[0];
-                    if (map.isValid(newX, newY)) {
-                        if (map.getCellValue(newX, newY).equals('H')) {
-                            // вытяни травоядного
-
-
-                            Herbivore herbivore = (Herbivore) Map.getCreatureByCoordinates(newX, newY);
-                            herbivore.takeDamage(20);
-                            if (herbivore.getHp() <= 0) {
-                                herbivore = null;
-                                Map.removeEntity(herbivore.getId(), x, y);
-                            }
-                            break;
-                        }
-                    }
-                }
+                creature.doAction(map);
             }
+
+
         }
     }
 
@@ -84,57 +57,87 @@ public class Simulation {
         map = new Map(countHerbivore, countPredator, countGrass, countRock, countTree);
     }
 
-    public static Herbivore getHerbivore() {
-        for (Entity entity : Map.mapObjects.values()) {
-            if (entity instanceof Herbivore) {
-                return (Herbivore) entity;
-            }
-        }
-        return null;
-    }
+
 
     // просимулировать и отрендерить один ход
     public static void nextTurn() {
         Renderer.renderMap(map);
         makeStep();
         makeAction();
-
     }
 
 
-    // запустить бесконечный цикл симуляции и рендеринга
-    public void startSimulation() {
-
+    public static void printGame() {
+        System.out.println("Введите команду:\n");
+        System.out.println("1 - Сделать 1 шаг Симуляции");
+        System.out.println("2 - Начать Симуляцию");
+        System.out.println("0 - Выйти из игры");
     }
 
-    // приостановить бесконечный цикл симуляции и рендеринга
-    public void pauseSimulation() {
-
-    }
-
-
-    public static void main(String[] args) {
-//        Actions action = new Actions();
+    public static void main(String[] args) throws InterruptedException {
 
         int countHerbivore = 5;
         int countPredator = 3;
-
         int countGrass = 5;
         int countRock = 4;
         int countTree = 3;
 
+        printGame();
+
         initActions(countHerbivore, countPredator, countGrass, countRock, countTree);
 
 
-//        Scanner scanner = new Scanner();
+
+        Scanner scanner = new Scanner(System.in);
+        AtomicBoolean isRunning = new AtomicBoolean(true);
+
+        while (isRunning.get()) {
 
 
-        nextTurn();
-        nextTurn();
-        nextTurn();
-        nextTurn();
+            if (scanner.hasNextLine()) {
 
 
+                // Чтение выбора пользователя
+                int choice = 0;
+                if (scanner.hasNextInt()) {
+                    choice = scanner.nextInt();
+                } else {
+                    System.out.println("Invalid input. Please enter a number between 1 and 4.");
+                    scanner.next(); // Очищаем некорректный ввод
+                }
 
+                // Обработка выбора с помощью switch
+                switch (choice) {
+                    case 1:
+                        nextTurn();
+                        break;
+
+                    case 2:
+                        int countHerbivoreSimulation = countHerbivore;
+                        while (countHerbivoreSimulation > 0) {
+                            nextTurn();
+                            sleep(1000);
+                            countHerbivoreSimulation = 0;
+                            for (Entity entity : Map.mapObjects.values()) {
+                                // Проверка, является ли entity экземпляром Herbivore
+                                if (entity instanceof Herbivore) {
+                                    countHerbivoreSimulation += 1;
+                                }
+                            }
+                        }
+
+
+                    case 0:
+                        System.out.println("Выход из программы! Пока 👋");
+                        isRunning.set(false); // Завершаем цикл
+                        break;
+
+                    default:
+                        System.out.println("Неправильный ввод. Введи число от 0 до 2");
+                        break;
+                }
+            }
+        }
+        scanner.close(); // Закрываем сканер для освобождения ресурсов
     }
 }

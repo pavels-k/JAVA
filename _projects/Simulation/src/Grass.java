@@ -3,6 +3,14 @@ import java.util.Random;
 
 public class Grass extends Entity {
     // Ресурс для травоядных
+    int x;
+    int y;
+
+    public Grass(int x, int y) {
+
+        this.x = x;
+        this.y = y;
+    }
 
     int heal;
 

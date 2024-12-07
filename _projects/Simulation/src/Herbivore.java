@@ -1,14 +1,11 @@
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 // травоядное
 public class Herbivore extends Creature {
 
 
     Herbivore(int x, int y) {
-        super(1, x, y);
+        super(x, y);
     }
 
     // сделать ход
@@ -57,14 +54,14 @@ public class Herbivore extends Creature {
 
 
                 int newX = x + direction[0];
-                int newY = y + direction[0];
+                int newY = y + direction[1];
 
                 if (map.isValid(newX, newY)) {
 
                     // соседняя координата не должна быть пустой или травоядным
                     String CurrentPosition = map.getCellValue(newX, newY);
 
-                    if (CurrentPosition != " " && CurrentPosition != "G") {
+                    if (!Objects.equals(CurrentPosition, " ") && !Objects.equals(CurrentPosition, "G")) {
                         continue;
                     }
 
@@ -101,7 +98,7 @@ public class Herbivore extends Creature {
                 String currentPosition = map.getCellValue(newX, newY);
 
                 // Если позиция свободна
-                if (currentPosition == " ") {
+                if (Objects.equals(currentPosition, " ")) {
                     map.setCellValue(xCurrent, yCurrent, " ");
                     this.x += direction[0];
                     this.y += direction[1];
@@ -118,16 +115,28 @@ public class Herbivore extends Creature {
 
 
     // eat
+    @Override
     public void doAction(Map map) {
         for (int[] direction : Simulation.DIRECTIONS) {
-            if (map.getCellValue(x + direction[0], y + direction[1]).equals('G')) {
 
-                map.setCellValue(x + direction[0], y + direction[1], " ");
+            int newX = x + direction[0];
+            int newY = y + direction[1];
 
-                Grass grass = (Grass) Map.getCreatureByCoordinates(x + direction[0], y + direction[1]);
-                this.addHp(grass.getHeal());
-                grass = null;
-                break;
+            if (map.isValid(newX, newY)) {
+
+                if (map.getCellValue(newX, newY).equals("G")) {
+
+
+                    Grass grass = (Grass) Map.getCreatureByCoordinates(newX, newY);
+                    this.addHp(grass.getHeal());
+
+                    // Удаление травы (Порядок важен)
+                    map.removeEntity(x, y);
+                    map.setCellValue(newX, newY, " ");
+                    grass = null;
+
+                    break;
+                }
             }
         }
     }
@@ -140,10 +149,4 @@ public class Herbivore extends Creature {
             System.out.println("Травоядное уничтожено");
         }
     }
-
-//    public void eatGrass() {
-//        for (int[] direction : Simulation.DIRECTIONS) {
-//            ;
-//        }
-//}
 }

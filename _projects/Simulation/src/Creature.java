@@ -1,17 +1,12 @@
-import java.util.UUID;
 
-public abstract class Creature extends Entity{
-    private int speed;
-    protected  int hp;
+public abstract class Creature extends Entity {
+    protected int hp;
 
     public int x;
     public int y;
 
-    private String id;
 
-    public Creature(int speed, int x, int y) {
-        this.speed = speed;
-        this.id = UUID.randomUUID().toString();
+    public Creature(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -22,16 +17,11 @@ public abstract class Creature extends Entity{
         return hp;
     }
 
-    public void setHp(int hp) {
-        this.hp = hp;
-    }
-
-    public String getId(){
-        return id;
+    public void doAction(Map map) {
     }
 
 
-    public void addHp(int healthIncrement){
+    public void addHp(int healthIncrement) {
         hp = Math.min(hp + healthIncrement, 100);
     }
 
@@ -47,8 +37,6 @@ public abstract class Creature extends Entity{
         }
         return new int[]{0, y - yCurrent > 0 ? 1 : -1};
     }
-
-
 
 
     // движение

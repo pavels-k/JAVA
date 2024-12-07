@@ -1,12 +1,9 @@
 import java.util.*;
 
 public class Predator extends Creature {
-    private String id;
-    private int attackPower;
 
     public Predator(int x, int y) {
-        super(2, x, y);
-        this.id = UUID.randomUUID().toString();
+        super(x, y);
     }
 
 
@@ -57,7 +54,7 @@ public class Predator extends Creature {
                     String CurrentPosition = map.getCellValue(newX, newY);
 
 
-                    if (CurrentPosition != " " && CurrentPosition != "P") {
+                    if (!Objects.equals(CurrentPosition, " ") && !Objects.equals(CurrentPosition, "P")) {
                         continue;
                     }
                 }
@@ -90,7 +87,7 @@ public class Predator extends Creature {
                 String currentPosition = map.getCellValue(newX, newY);
 
                 // Если позиция свободна
-                if (currentPosition == " ") {
+                if (Objects.equals(currentPosition, " ")) {
                     map.setCellValue(xCurrent, yCurrent, " ");
                     this.x += direction[0];
                     this.y += direction[1];
@@ -100,4 +97,32 @@ public class Predator extends Creature {
             }
         }
     }
+    @Override
+    public void doAction(Map map) {
+
+        for (int[] direction : Simulation.DIRECTIONS) {
+            int newX = x + direction[0];
+            int newY = y + direction[1];
+            if (map.isValid(newX, newY)) {
+                if (map.getCellValue(newX, newY).equals("H")) {
+                    // вытяни травоядного
+
+
+                    Herbivore herbivore = (Herbivore) Map.getCreatureByCoordinates(newX, newY);
+                    assert herbivore != null;
+                    herbivore.takeDamage(20);
+                    if (herbivore.getHp() <= 0) {
+
+                        // Удаление травоядного
+                        map.removeEntity(x, y);
+                        map.setCellValue(newX, newY, " ");
+                        herbivore = null;
+                    }
+                    break;
+                }
+            }
+        }
+    }
 }
+
+

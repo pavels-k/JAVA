@@ -9,7 +9,7 @@ public class Map {
     final int N = 20; // Длина карты
 
     // id, объект существа
-    public static HashMap<String, Entity> mapObjects;
+    public static HashMap<Point, Entity> mapObjects = new HashMap<>();
 
     private static ArrayList<ArrayList<String>> arrayList = new ArrayList<>();
 
@@ -40,12 +40,19 @@ public class Map {
                 if (arrayList.get(randomX).get(randomY).equals(" ")) {
                     arrayList.get(randomX).set(randomY, symbol);
                     isOccupied = 2;
-                    if (symbol.equals("H")) {
-                        Herbivore herbivore = new Herbivore(randomX, randomY);
-                        addCreatureToMap(herbivore);
-                    } else if (symbol.equals("P")) {
-                        Predator predator = new Predator(randomX, randomY);
-                        addCreatureToMap(predator);
+                    switch (symbol) {
+                        case "H" -> {
+                            Herbivore herbivore = new Herbivore(randomX, randomY);
+                            addCreatureToMap(randomX, randomY, herbivore);
+                        }
+                        case "P" -> {
+                            Predator predator = new Predator(randomX, randomY);
+                            addCreatureToMap(randomX, randomY, predator);
+                        }
+                        case "G" -> {
+                            Grass grass = new Grass(randomX, randomY);
+                            addCreatureToMap(randomX, randomY, grass);
+                        }
                     }
                 }
             }
@@ -63,16 +70,16 @@ public class Map {
     }
 
     // Добавить существо в хэшмапу mapObjects
-    public void addCreatureToMap(Creature creature) {
-        mapObjects.put(creature.getId(), creature);
+    public void addCreatureToMap(int x, int y, Entity entity) {
+        mapObjects.put(new Point(x, y), entity);
     }
 
     public String getCellValue(int i, int j) {
         return arrayList.get(i).get(j);
     }
 
-    public static String setCellValue(int i, int j, String symbol) {
-        return arrayList.get(i).set(j, symbol);
+    public static void setCellValue(int i, int j, String symbol) {
+        arrayList.get(i).set(j, symbol);
     }
 
     // Метод для получения Creature по координатам
@@ -80,11 +87,10 @@ public class Map {
         if (x >= 0 && x < arrayList.size()) { // Проверяем, что x в пределах списка
             ArrayList<String> row = arrayList.get(x);
             if (y >= 0 && y < row.size()) { // Проверяем, что y в пределах строки
-                String key = row.get(y); // Извлекаем ключ из arrayList
-                if (mapObjects.containsKey(key)) {
-                    return mapObjects.get(key); // Возвращаем Creature, если ключ существует
+                if (mapObjects.containsKey(new Point(x, y))) {
+                    return mapObjects.get(new Point(x, y)); // Возвращаем Creature, если ключ существует
                 } else {
-                    System.out.println("No Creature found for key: " + key);
+                    System.out.println("No Creature found for x = " + x + " y = " + y);
                 }
             } else {
                 System.out.println("Invalid Y coordinate: " + y);
@@ -96,12 +102,12 @@ public class Map {
     }
 
     // Метод для удаления объекта по ID
-    public static void removeEntity(String id, int x, int y) {
-        if (mapObjects.containsKey(id)) {
-            mapObjects.remove(id);
-            System.out.println("Creature with ID '" + id + "' has been removed.");
+    public static void removeEntity(int x, int y) {
+        if (mapObjects.containsKey(new Point(x, y))) {
+            mapObjects.remove(new Point(x, y));
+            System.out.println("Creature with x = " + x + " y = " + y + " has been removed.");
         } else {
-            System.out.println("No creature found with ID '" + id + "'.");
+            System.out.println("No creature found with x = " + x + " y = " + y + ".");
         }
         setCellValue(x, y, " ");
     }

@@ -67,6 +67,9 @@ public class Herbivore extends Creature {
 
                     // изменить координату травоядному
                     map.setCellValue(xCurrent, yCurrent, " ");
+                    // Добавить изменение в MapObjects
+
+
                     this.x += direction[0];
                     this.y += direction[1];
                     map.setCellValue(this.x, this.y, "H");

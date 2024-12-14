@@ -20,7 +20,10 @@ public class Simulation {
     // А) Сделать шаг
     public static void makeStep() {
         // Цикл по существам
-        for (Entity entity : Map.mapObjects.values()) {
+        System.out.println(Map.mapObjects);
+        Collection<Entity> values = Map.mapObjects.values();
+        for (Entity entity :values) {
+
             Creature creature = null;
             if (entity instanceof Creature) {
                 creature = (Creature) entity;

@@ -60,11 +60,10 @@ public class Predator extends Creature {
                 }
 
                 // изменить координату хищнику
-                map.setCellValue(xCurrent, yCurrent, " ");
                 this.x += direction[0];
                 this.y += direction[1];
 
-                map.setCellValue(this.x, this.y, "P");
+                map.setCellValue(this.x, this.y, xCurrent, yCurrent, "P");
                 this.addHp(10); // когда
                 return;
             }
@@ -88,15 +87,15 @@ public class Predator extends Creature {
 
                 // Если позиция свободна
                 if (Objects.equals(currentPosition, " ")) {
-                    map.setCellValue(xCurrent, yCurrent, " ");
                     this.x += direction[0];
                     this.y += direction[1];
-                    map.setCellValue(this.x, this.y, "P");
+                    map.setCellValue(this.x, this.y, xCurrent, yCurrent, "P");
                     return;
                 }
             }
         }
     }
+
     @Override
     public void doAction(Map map) {
 
@@ -115,7 +114,7 @@ public class Predator extends Creature {
 
                         // Удаление травоядного
                         map.removeEntity(x, y);
-                        map.setCellValue(newX, newY, " ");
+                        map.arrayList.get(newX).set(newY, " ");
                         herbivore = null;
                     }
                     break;

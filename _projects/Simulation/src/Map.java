@@ -11,7 +11,7 @@ public class Map {
     // id, объект существа
     public static HashMap<Point, Entity> mapObjects = new HashMap<>();
 
-    private static ArrayList<ArrayList<String>> arrayList = new ArrayList<>();
+    static ArrayList<ArrayList<String>> arrayList = new ArrayList<>();
 
     // Генерация карты
     public Map(int countHerbivore, int countPredator, int countGrass, int countRock, int countTree) {
@@ -74,13 +74,26 @@ public class Map {
         mapObjects.put(new Point(x, y), entity);
     }
 
+
     public String getCellValue(int i, int j) {
         return arrayList.get(i).get(j);
     }
 
-    public static void setCellValue(int i, int j, String symbol) {
-        arrayList.get(i).set(j, symbol);
+    public static void setCellValue(int x, int y, int xOld, int yOld, String symbol) {
+        arrayList.get(xOld).set(yOld, " ");
+
+        if (mapObjects.containsKey(new Point(xOld, yOld))) {
+            Entity valueEntity = mapObjects.remove(new Point(xOld, yOld)); // Удаляем старый ключ
+            mapObjects.put(new Point(x, y), valueEntity); // Добавляем новый ключ с этим же значением
+        } else {
+            System.out.println("Key x = " + xOld + " y = " + yOld + " + not found in the map.");
+        }
+
+
+        arrayList.get(x).set(y, symbol);
+
     }
+
 
     // Метод для получения Creature по координатам
     public static Entity getCreatureByCoordinates(int x, int y) {
@@ -109,7 +122,7 @@ public class Map {
         } else {
             System.out.println("No creature found with x = " + x + " y = " + y + ".");
         }
-        setCellValue(x, y, " ");
+        arrayList.get(x).set(y, " ");
     }
 
     // проверка границы карты

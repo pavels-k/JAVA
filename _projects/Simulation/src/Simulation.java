@@ -1,4 +1,6 @@
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static java.lang.Thread.sleep;

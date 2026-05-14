@@ -1,0 +1,21 @@
+# IntelliJ IDEA local state
+.idea/workspace.xml
+.idea/shelf/
+
+# Java build output
+out/
+build/
+*.class
+
+# Gradle local cache
+.gradle/
+
+# Accidental Gradle init files in the source folder
+Programms/.gitattributes
+Programms/.gitignore
+Programms/build.gradle.kts
+Programms/gradle.properties
+Programms/gradlew
+Programms/gradlew.bat
+Programms/settings.gradle.kts
+gradle/wrapper/gradle-wrapper.properties

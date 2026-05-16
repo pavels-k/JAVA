@@ -1,3 +1,5 @@
+import static java.lang.Math.round;
+
 public class Day {
     public static void main(String[] args) {
         System.out.println("YOUUUU");
@@ -6,20 +8,20 @@ public class Day {
         int day = 15;
         int month = 5;
 
-        double current_percent = round((30.0 * month + day) * 100 / year, 2);
+        double current_percent = round((30.0 * month + day) * 10000 / year) / 100.0;
         System.out.println("Текущий прогресс = " + current_percent + "%");
-
 
         for (int i = 1; i < 5; i++) {
             System.out.println("счетчик равен = " + i);
         }
+        if (current_percent > 40) {
+            System.out.println("Good result");
+        } else if (current_percent > 95) {
+            System.out.println("done");
+        } else {
+            System.out.println("Старайся больше");
+        }
+
     }
 
-    public static double round(double value, int places) {
-        if (places < 0) {
-            throw new IllegalArgumentException("places must be non-negative");
-        }
-        long factor = (long) Math.pow(10, places);
-        return Math.round(value * factor) / (double) factor;
-    }
 }

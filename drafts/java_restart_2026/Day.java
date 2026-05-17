@@ -1,4 +1,5 @@
 import static java.lang.Math.round;
+import static java.lang.Math.tan;
 
 public class Day {
     public static void main(String[] args) {
@@ -22,6 +23,16 @@ public class Day {
             System.out.println("Старайся больше");
         }
 
+
+        String[] tags = {"city", "football", "work", "friends", "travel"};
+
+
+        System.out.println();
+        for (String tag : tags) {
+            if (tag.length() > 5) {
+                System.out.println(tag);
+            }
+        }
     }
 
 }

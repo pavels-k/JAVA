@@ -42,5 +42,6 @@ public class Day {
         String[] tags = {"city", "football", "work", "friends", "travel"};
 
         printFromArray(tags);
+
     }
 }

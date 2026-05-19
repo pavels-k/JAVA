@@ -61,7 +61,5 @@ public class Day {
         System.out.println(item.rating);
         System.out.println(item.tag[0]);
         System.out.println(item.description);
-
-
     }
 }

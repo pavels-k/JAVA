@@ -1,7 +1,14 @@
 import static java.lang.Math.round;
-import static java.lang.Math.tan;
+
 
 public class Day {
+
+    public static class VideoEntry {
+        String date;
+        String[] tag;
+        String description;
+        int rating;
+    }
 
     static void printCurrentPercent(int year, int day, int month) {
         double current_percent = round((30.0 * month + day) * 10000 / year) / 100.0;
@@ -42,6 +49,19 @@ public class Day {
         String[] tags = {"city", "football", "work", "friends", "travel"};
 
         printFromArray(tags);
+        VideoEntry item = new VideoEntry();
+        item.date = "2026-05-19";
+        item.tag = tags;
+        item.description = "Something here";
+        item.rating = 100;
+
+        System.out.println();
+
+        System.out.println(item.date);
+        System.out.println(item.rating);
+        System.out.println(item.tag[0]);
+        System.out.println(item.description);
+
 
     }
 }

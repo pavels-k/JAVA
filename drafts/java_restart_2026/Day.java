@@ -1,3 +1,5 @@
+import jdk.jfr.ValueDescriptor;
+
 import static java.lang.Math.round;
 
 
@@ -8,6 +10,14 @@ public class Day {
         String[] tag;
         String description;
         int rating;
+
+        VideoEntry(String date, String[] tag, String description, int rating) {
+            this.date = date;
+            this.tag = tag;
+            this.description = description;
+            this.rating = rating;
+        }
+
     }
 
     static void printCurrentPercent(int year, int day, int month) {
@@ -49,21 +59,17 @@ public class Day {
         String[] tags = {"city", "football", "work", "friends", "travel"};
 
         printFromArray(tags);
-        VideoEntry item = new VideoEntry();
-        item.date = "2026-05-19";
-        item.tag = tags;
-        item.description = "Something here";
-        item.rating = 100;
+
+
+        VideoEntry object = new VideoEntry("2026-05-19", tags, "Something here", 100);
+
 
         System.out.println();
 
-        System.out.println(item.date);
-        System.out.println(item.rating);
-        System.out.println(item.tag[0]);
-        System.out.println(item.description);
-
-
-
+        System.out.println(object.date);
+        System.out.println(object.rating);
+        System.out.println(object.tag[0]);
+        System.out.println(object.description);
 
     }
 }

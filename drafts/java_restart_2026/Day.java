@@ -1,5 +1,7 @@
 import jdk.jfr.ValueDescriptor;
 
+import java.util.ArrayList;
+
 import static java.lang.Math.round;
 
 
@@ -16,6 +18,13 @@ public class Day {
             this.tag = tag;
             this.description = description;
             this.rating = rating;
+        }
+
+        void printInfo(){
+            System.out.println(this.date);
+            System.out.println(this.tag);
+            System.out.println(this.description);
+            System.out.println(this.rating);
         }
 
     }
@@ -64,12 +73,14 @@ public class Day {
         VideoEntry object = new VideoEntry("2026-05-19", tags, "Something here", 100);
 
 
-        System.out.println();
 
-        System.out.println(object.date);
-        System.out.println(object.rating);
-        System.out.println(object.tag[0]);
-        System.out.println(object.description);
 
+
+        ArrayList<VideoEntry> entries = new ArrayList<>();
+
+        entries.add(new VideoEntry("2026-05-19", tags, "Something here", 100));
+        System.out.println(entries.getFirst().date);
+
+        entries.getFirst().printInfo();
     }
 }

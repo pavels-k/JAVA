@@ -1,6 +1,5 @@
-import jdk.jfr.ValueDescriptor;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static java.lang.Math.round;
 
@@ -20,13 +19,22 @@ public class Day {
             this.rating = rating;
         }
 
-        void printInfo(){
+        void printInfo() {
             System.out.println(this.date);
-            System.out.println(this.tag);
+            System.out.println(Arrays.toString(this.tag));
             System.out.println(this.description);
             System.out.println(this.rating);
         }
+    }
 
+    static void printByTag(ArrayList<VideoEntry> entries, String tag) {
+        for (VideoEntry entry : entries) {
+            for (String itemTag : entry.tag) {
+                if (itemTag.equals(tag)) {
+                    entry.printInfo();
+                }
+            }
+        }
     }
 
     static void printCurrentPercent(int year, int day, int month) {
@@ -73,14 +81,13 @@ public class Day {
         VideoEntry object = new VideoEntry("2026-05-19", tags, "Something here", 100);
 
 
-
-
-
         ArrayList<VideoEntry> entries = new ArrayList<>();
 
         entries.add(new VideoEntry("2026-05-19", tags, "Something here", 100));
-        System.out.println(entries.getFirst().date);
+        System.out.println(entries.get(0).date);
 
-        entries.getFirst().printInfo();
+        entries.get(0).printInfo();
+
+        printByTag(entries, "football");
     }
 }

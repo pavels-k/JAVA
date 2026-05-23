@@ -6,31 +6,41 @@ import static java.lang.Math.round;
 
 public class Day {
 
+    enum Tag {
+        CITY,
+        FOOTBALL,
+        WORK,
+        FRIENDS,
+        TRAVEL,
+        SPORT
+    }
+
+
     public static class VideoEntry {
         String date;
-        String[] tag;
+        Tag[] tags;
         String description;
         int rating;
 
-        VideoEntry(String date, String[] tag, String description, int rating) {
+        VideoEntry(String date, Tag[] tags, String description, int rating) {
             this.date = date;
-            this.tag = tag;
+            this.tags = tags;
             this.description = description;
             this.rating = rating;
         }
 
         void printInfo() {
             System.out.println(this.date);
-            System.out.println(Arrays.toString(this.tag));
+            System.out.println(Arrays.toString(this.tags));
             System.out.println(this.description);
             System.out.println(this.rating);
         }
     }
 
-    static void printByTag(ArrayList<VideoEntry> entries, String tag) {
+    static void printByTag(ArrayList<VideoEntry> entries, Tag tag) {
         for (VideoEntry entry : entries) {
-            for (String itemTag : entry.tag) {
-                if (itemTag.equals(tag)) {
+            for (Tag itemTag : entry.tags) {
+                if (itemTag == tag) {
                     entry.printInfo();
                 }
             }
@@ -53,10 +63,10 @@ public class Day {
         }
     }
 
-    static void printFromArray(String[] array) {
+    static void printFromArray(Tag[] array) {
         System.out.println();
-        for (String iter : array) {
-            if (iter.length() > 5) {
+        for (Tag iter : array) {
+            if (iter.name().length() > 5) {
                 System.out.println(iter);
             }
         }
@@ -73,12 +83,10 @@ public class Day {
         printCurrentPercent(year, day, month);
 
 
-        String[] tags = {"city", "football", "work", "friends", "travel"};
+        Tag[] tags = {Tag.CITY, Tag.FOOTBALL, Tag.WORK, Tag.SPORT};
+        // Или Tag[] tags = Tag.values();
 
         printFromArray(tags);
-
-
-        VideoEntry object = new VideoEntry("2026-05-19", tags, "Something here", 100);
 
 
         ArrayList<VideoEntry> entries = new ArrayList<>();
@@ -88,6 +96,6 @@ public class Day {
 
         entries.get(0).printInfo();
 
-        printByTag(entries, "football");
+        printByTag(entries, Tag.FOOTBALL);
     }
 }

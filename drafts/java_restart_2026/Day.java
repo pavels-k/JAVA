@@ -15,8 +15,20 @@ public class Day {
         SPORT
     }
 
+    public static class DiaryEntry {
+        String date;
+        String description;
+    }
 
-    public static class VideoEntry {
+
+    public static class PhotoEntry extends DiaryEntry {
+        int iso;
+        double shutter;
+        int f;
+    }
+
+
+    public static class VideoEntry extends DiaryEntry {
         String date;
         Tag[] tags;
         String description;

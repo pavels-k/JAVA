@@ -84,6 +84,13 @@ public class Day {
         }
     }
 
+
+    static void printAllDays(ArrayList<VideoEntry> entries) {
+        for (VideoEntry entry : entries) {
+            System.out.println(entry.date);
+        }
+    }
+
     public static void main(String[] args) {
 
         System.out.println("YOUUUU");
@@ -109,5 +116,6 @@ public class Day {
         entries.get(0).printInfo();
 
         printByTag(entries, Tag.FOOTBALL);
+        printAllDays(entries);
     }
 }

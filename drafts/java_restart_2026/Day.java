@@ -24,7 +24,18 @@ public class Day {
     public static class PhotoEntry extends DiaryEntry {
         int iso;
         double shutter;
-        int f;
+        double f;
+
+        PhotoEntry(int iso, int shutter, double f) {
+            this.iso = iso;
+            this.shutter = shutter;
+            this.f = f;
+        }
+
+        int getIso(){
+            return this.iso;
+        }
+
     }
 
 
@@ -49,10 +60,10 @@ public class Day {
         }
     }
 
-    static void printByTag(ArrayList<VideoEntry> entries, Tag tag) {
+    static void printByTag(ArrayList<VideoEntry> entries) {
         for (VideoEntry entry : entries) {
             for (Tag itemTag : entry.tags) {
-                if (itemTag == tag) {
+                if (itemTag == Tag.FOOTBALL) {
                     entry.printInfo();
                 }
             }
@@ -115,7 +126,11 @@ public class Day {
 
         entries.get(0).printInfo();
 
-        printByTag(entries, Tag.FOOTBALL);
+        printByTag(entries);
         printAllDays(entries);
+
+        PhotoEntry entry = new PhotoEntry(200, 60, 1.8);
+
+        System.out.println(entry.getIso());
     }
 }
